@@ -1,8 +1,7 @@
 package Programmers.prac.level2;
 
-import Programmers.Ground;
 
-public class 피보나치_수 {
+public class 피보나치_수1 {
     public int solution(int n) {
         int [] arr = new int[n+1];
         arr[0] = 0;
@@ -20,7 +19,7 @@ public class 피보나치_수 {
 
 
     public static void main(String[] args) {
-        Ground g = new Ground();
+        피보나치_수1 g = new 피보나치_수1();
         int n = 3;
         g.solution(n);
     }
