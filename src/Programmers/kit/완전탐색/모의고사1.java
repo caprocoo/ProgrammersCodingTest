@@ -40,7 +40,7 @@ public class 모의고사1 {
         return answer;
 
     }
-    
+
 
     public static void main(String[] args) {
         모의고사1 a = new 모의고사1();

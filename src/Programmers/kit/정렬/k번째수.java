@@ -1,26 +1,22 @@
 package Programmers.kit.정렬;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class k번째수 {
 
     public int[] solution(int[] array, int[][] commands) {
-        List<Integer> list = new ArrayList<>();
-        for (int[] arr: commands) {
+        List<Integer> list = new ArrayList<Integer>();
 
-
-
-
+        for(int[] a : commands) {
+            int[] arr = Arrays.copyOfRange(array, a[0]-1, a[1]);
+            Arrays.sort(arr);
+            int value = arr[a[2]-1];
+            list.add(value);
         }
 
-
-        int [] answer = {};
-
-
-
-
-        return answer;
+        return list.stream().mapToInt(i->i).toArray();
     }
 
     public static void main(String[] args) {
