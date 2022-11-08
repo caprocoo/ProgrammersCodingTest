@@ -7,7 +7,7 @@ import java.util.List;
 public class k번째수 {
 
     public int[] solution(int[] array, int[][] commands) {
-        List<Integer> list = new ArrayList<Integer>();
+        List<Integer> list = new ArrayList<>();
 
         for(int[] a : commands) {
             int[] arr = Arrays.copyOfRange(array, a[0]-1, a[1]);
