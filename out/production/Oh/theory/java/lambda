@@ -37,6 +37,25 @@
         MyFunction f = (a,b) -> a>b?a:b;
         int value = f.max(3,5);
 
+6. 함수형 인터페이스 타입의 매개변수, 변환타입
+    - 함수형 인터페이스 타입의 매개변수
+    ex)
+    [기존]
+    interface MyFunction{
+        void myMethod();
+    }
+
+    void aMethod(MyFunction f){
+        //MyFunction에 정의된 method 호출
+        f.myMethod();
+    }
+
+    [변형]
+    MyFunction f = () -> System.out.println("myMethod()");
+    aMethod(f);
+
+    [변형2]
+    aMethod(() -> System.out.println("myMethod()"));
 
 
 

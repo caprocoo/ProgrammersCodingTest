@@ -21,7 +21,7 @@ public class 문자열_내_p와_y의_개수1 {
 //        }else{
 //            return false;
 //        }
-        return true;
+        return arr[0]==arr[1];
 
     }
 
