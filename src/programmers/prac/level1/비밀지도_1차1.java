@@ -1,9 +1,7 @@
 package programmers.prac.level1;
 
 
-import java.util.Arrays;
-
-public class 비밀지도_1차 {
+public class 비밀지도_1차1 {
 
     public String[] solution(int n, int[] arr1, int[] arr2) {
         String[] answer = new String [n];
@@ -28,7 +26,7 @@ public class 비밀지도_1차 {
 
     public static void main(String[] args) {
 
-        비밀지도_1차 a = new 비밀지도_1차();
+        비밀지도_1차1 a = new 비밀지도_1차1();
 
         int n = 6;
 //        int []arr1 ={9,20,28,18,11};
