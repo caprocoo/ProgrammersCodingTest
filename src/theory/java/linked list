@@ -1,0 +1,45 @@
+Linked List
+
+1. 연결리스트
+    : 각 노드가 데이터와 포인터를 가지고 한 줄로 연결되어 있는 방식의 자료구조이다.
+    - 데이터를 담고 있는 노드들이 연결되어 있고, 노드의 포인터가 이전 노드와 다음 노드와의 연결을 담당한다.
+    - Node는 LinkedList에 객체를 추가하거나 삭제하면 앞뒤 링크만 변경되고 나머지 링크는 변경되지 않는다.
+    - 중간에 데이터를 추가/삭제하더라도 전체 인덱스에 영향을 주지 않아 ArrayList에 비해 데이터 추가/삭제가 용이하다.
+    - 하지만 인덱스가 없기에 특정 요소에 접근하기 위해서는 순차 탐색이 필요하여 탐색 속도가 떨어진다.
+    - 그러므로 탐색, 정렬을 자주하는 경우 : 배열 사용 / 데이터 추가, 삭제가 많은 경우 : 연결 리스트 사용
+
+2. Linked List 선언
+    <code>
+        LinkedList list = new LinkedList();//타입 미설정 Object로 선언된다.
+        LinkedList<Student> members = new LinkedList<Student>();//타입설정 Student객체만 사용가능
+        LinkedList<Integer> num = new LinkedList<Integer>();//타입설정 int타입만 사용가능
+        LinkedList<Integer> num2 = new LinkedList<>();//new에서 타입 파라미터 생략가능
+        LinkedList<Integer> list2 = new LinkedList<Integer>(Arrays.asList(1,2));//생성시 값추가
+    </code>
+
+3. Linked List 값 추가
+   <code>
+        LinkedList<Integer> list = new LinkedList<Integer>();
+        list.addFirst(1);//가장 앞에 데이터 추가
+        list.addLast(2);//가장 뒤에 데이터 추가
+        list.add(3);//데이터 추가
+        list.add(1, 10);//index 1에 데이터 10 추가
+
+        LinkedList<Student> members = new LinkedList<Student>();
+        Student student = new Student(name,age);
+        members.add(student);
+    </code>
+
+
+4. Linked List 값 삭제
+   <code>
+        LinkedList<Integer> list = new LinkedList<Integer>(Arrays.asList(1,2,3,4,5));
+        list.removeFirst(); //가장 앞의 데이터 제거
+        list.removeLast(); //가장 뒤의 데이터 제거
+        list.remove(); //생략시 0번째 index제거
+        list.remove(1); //index 1 제거
+        list.clear(); //모든 값 제거
+    </code>
+
+
+* 출처 : https://coding-factory.tistory.com/552
