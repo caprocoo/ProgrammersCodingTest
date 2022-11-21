@@ -1,5 +1,54 @@
 Binary Search Tree (이진 탐색 트리)
 
+0. 이진탐색이란? (정렬된 배열 또는 리스트에 적합한 고속 탐색 방법)
+    - 배열의 중앙에 있는 값을 조사하여 찾고자 하는 항목이 왼쪽 또는 오른쪽 부분 배열에 있는지를 알아내어 탐색의 범위를 반으로 줄인다.
+    - 찾고자 하는 값이 속해있지 않은 부분은 전혀 고려할 필요가 없기 때문에, 매 단계에서 검색해야 할 리스트의 크기를 반으로 줄일 수 있다.
+    - 이러한 방법을 반복적으로 사용해 탐색하는 방법이 이진 탐색이다.
+    - 데이터의 삽입이나 삭제가 빈번할 시에는 적합하지 않고, 주로 고정된 데이터에 대한 탐색에 적합하다.
+
+    - 순환호출
+        <code>
+            int binarySearch1(int key, int low, int high) {
+                int mid;
+
+                if(low <= high) {
+                    mid = (low + high) / 2;
+
+                    if(key == arr[mid]) { // 탐색 성공
+                        return mid;
+                    } else if(key < arr[mid]) {
+                        // 왼쪽 부분 arr[0]부터 arr[mid-1]에서의 탐색
+                        return binarySearch1(key ,low, mid-1);
+                    } else {
+                        // 오른쪽 부분 - arr[mid+1]부터 arr[high]에서의 탐색
+                        return binarySearch1(key, mid+1, high);
+                    }
+                }
+
+                return -1; // 탐색 실패
+            }
+        </code>
+    - 반복을 이용한 이진 탐색 구현 : 반복 구조를 사용하는 것이 재귀 호출로 구현하는 것보다 효율적이다.
+        <code>
+            int binarySearch2(int key, int low, int high) {
+            	int mid;
+
+            	while(low <= high) {
+            		mid = (low + high) / 2;
+
+            		if(key == arr[mid]) {
+            			return mid;
+            		} else if(key < arr[mid]) {
+            			high = mid - 1;
+            		} else {
+            			low = mid + 1;
+            		}
+            	}
+
+            	return -1; // 탐색 실패
+            }
+        </code>
+
 1. 이진 탐색 트리 성질
     - 모든 원소의 키는 유일한 키를 가진다.
     - 왼쪽 서브 트리 키들은 루트 키보다 작다.
@@ -54,5 +103,7 @@ Binary Search Tree (이진 탐색 트리)
         - 삭제되는 노드의 오른쪽 서브 트리에서 가장 작은 값을 갖는 노드는 오른쪽 서브트리에서 왼쪽 자식 노드를 타고
           null을 만날 때까지 계속 타고 내려가면 찾을 수 있다.
 
+
 * 출처 :
  - https://minhamina.tistory.com/97
+ - https://minhamina.tistory.com/127
