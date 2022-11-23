@@ -1,0 +1,72 @@
+1. Enum이란?
+    : 요일, 계절과 같이 한정된 데이터만을 가지는 타입을 Enumeration Type이라고 한다.
+    - java 1.5부터 열거형 타입들을 사용할 수 있게 되었다.
+    - 열거상수를 적을 때는 관례상 대문자로 적고 2개의 단어로 연결되어 있을 때는 _로 연결한다.
+    - public static final 필드이며 객체로 제공된다.
+    <code>
+        public enum Week {
+            MONDAY, TUSEDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
+        }
+    </code>
+
+2. Enum과 메모리 초기화
+    <code>
+        Week today = Week.MONDAY;
+    </code>
+    1.  Method할당 -> Heap영역 할당
+        - 위와 같은 로직을 만나면 Week 객체는 MONDAY~SUNDAY까지 각각 java.lang.Enum 클래스를 상속받는 고유의 객체가 만들어짐.
+        - Method 영역의 열거상수들은 해당 Heap영역에 생성된 객체를 바라본다.
+        그래서 아래와 같은 코드 today==Week.SUNDAY 의 반환 값이 true값이 된다.
+        <code>
+            Week thisWeek = Week.SUNDAY;
+            Week nextWeek = Week.SUNDAY;
+            thisWeek == nextWeek // true
+        </code>
+
+3. Enum의 응용 - 일반 메서드
+    : enum은 다른 추상 메서드가 아닌 일반 메서드를 가질 수 있다.
+    <code>
+        public enum Color {
+            RED, GREEN, BLUE;
+
+            public void colorInfo() {
+                System.out.println("Universal Color");
+            }
+        }
+
+        Color.BLUE.colorInfo();
+        // 출력
+        Universal Color;
+    </code>
+
+4. Enum의 응용 - 추가 속성과 생성자
+    : 열거형 상수는 추가 속성을 부여할 수 있으며 추가 속성이 여러 개가 있을 시 생성자에 순서대로 각각의 타입으로 넣을 수 있다.
+
+    <code>
+        public enum Color {
+
+            RED("빨강",100), GREEN("초록",10), BLUE("파랑",30);
+
+            private String koreName;
+            private int pay;
+
+            // 빨강, 100 순서대로 할당된다.
+            private Color(String koreName, int pay){
+                this.koreName = koreName;
+                this.pay      = pay;
+            }
+
+            public void colorInfo(){
+                System.out.println(koreName +"의 비용은 " + pay +"입니다.");
+            }
+        }
+
+        Color.BLUE.colorInfo();
+    </code>
+
+
+
+<code>
+    </code>
+* 출처 : https://honbabzone.com/java/java-enum/
+
