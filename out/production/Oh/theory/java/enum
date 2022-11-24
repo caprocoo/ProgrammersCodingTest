@@ -64,9 +64,87 @@
         Color.BLUE.colorInfo();
     </code>
 
+5. Enum의 응용 - 메서드 재정의
+    : abstract 메서드를 통해 열거형 상수안에 각 상수별로 특정 메서드를 재정의 하도록 할 수 있다.
+    <code>
+        public enum Color {
+            RED("빨강",100) {
+                @Override
+                public int calc(int a, int b) {
+                    return a+b;
+                }
+            }, GREEN("초록",10) {
+                @Override
+                public int calc(int a, int b) {
+                    return a-b;
+                }
+            }, BLUE("파랑",30) {
+                @Override
+                public int calc(int a, int b) {
+                    return a*b;
+                }
+            };
+
+            private String koreName;
+            private int pay;
+            private Color(String koreName, int pay){
+                this.koreName = koreName;
+                this.pay      = pay;
+            }
+
+            public void colorInfo(){
+                System.out.println(koreName +"의 비용은 " + pay +"입니다.");
+            }
+
+            public abstract int calc( int a, int b );
+        }
+
+        System.out.println(Color.BLUE.calc(5,10));
+        // 출력
+        50
+    </code>
+
+6. Enum의 응용 - 중첩 Enum
+
+    <code>
+        public enum Color {
+            RED("빨강",100,CheckPay.RED ), GREEN("초록",30,CheckPay.RED), BLUE("파랑",49,CheckPay.BLUE);
+
+            private String koreName;
+            private int pay;
+            private CheckPay checkPay;
+            private Color(String koreName, int pay, CheckPay checkPay ){
+                this.koreName = koreName;
+                this.pay      = pay;
+                this.checkPay = checkPay;
+            }
 
 
-<code>
+            public int calc() {
+                return this.checkPay.calc(pay);
+            };
+
+            private enum CheckPay{
+                RED {
+                    @Override
+                    public int calc(int pay) {
+                        return pay*100;
+                    }
+                },BLUE{
+                    @Override
+                    public int calc(int pay) {
+                        return pay*50;
+                    }
+                };
+
+                public abstract int calc( int pay );
+            }
+        }
+
+        System.out.println(Color.BLUE.calc());
+        // 출력
+        2450
+
     </code>
 * 출처 : https://honbabzone.com/java/java-enum/
 

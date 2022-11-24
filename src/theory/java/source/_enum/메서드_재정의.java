@@ -1,4 +1,4 @@
-package theory.java.source;
+package theory.java.source._enum;
 
 public class 메서드_재정의 {
 

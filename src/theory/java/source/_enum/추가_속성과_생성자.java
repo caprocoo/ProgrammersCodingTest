@@ -1,4 +1,4 @@
-package theory.java.source;
+package theory.java.source._enum;
 
 public class 추가_속성과_생성자 {
 

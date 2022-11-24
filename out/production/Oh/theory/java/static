@@ -1,0 +1,43 @@
+1. Static이란?
+    : Static은 정적이라는 의미를 가지고 있으며 Static 변수와 Static 메서드를 합쳐 정적 멤버라고 한다.
+    - 정적 변수(필드)와 정적 메서드는 객체에 소속된 멤버가 아니라 클래스에 고정된 멤버이다.
+    - 그렇기에 클래스 로더가 클래스를 로딩해서 메서드 메모리 영역에 적재할 때 클래스별로 관리된다.
+        => 클래스의 로딩이 긑나느 즉시 바로 사용할 수 있다.
+
+2. Static 멤버 생성
+    : Static 키워드를 통해 생성된 정적 멤버들은 Heap영역이 아닌 Static영역에 할당된다.
+    - 장점 : Static 영역에 할당된 메모리는 모든 객체가 공유하여 하나의 멤버를 어디서든지 참조할 수 있다.
+    - 단점 : Garbage Collector의 관리 영역 밖에 존재하기에 프로그램 종료시까지 메모리가 할당된 채로 존재한다.
+            => Static을 너무 남발하게 되면 시스템 성능에 악영향을 준다.
+
+3. Static 필드 사용 예시
+
+    <code>
+        class Number{
+            static int num = 0; //클래스 필드
+            int num2 = 0; //인스턴스 필드
+        }
+
+        public class Static_ex {
+
+            public static void main(String[] args) {
+            	Number number1 = new Number(); //첫번째 number
+            	Number number2 = new Number(); //두번쨰 number
+
+            	number1.num++; //클래스 필드 num을 1증가시킴
+            	number1.num2++; //인스턴스 필드 num을 1증가시킴
+            	System.out.println(number2.num); //두번째 number의 클래스 필드 출력
+            	System.out.println(number2.num2); //두번째 number의 인스턴스 필드 출력
+            }
+        }
+    </code>
+
+    => 인스턴스 변수는 인스턴스가 생성될 때마낟 생성되므로 인스턴스가 각기 다른 값을 가지게 된다.
+       하지만 Static 변수는 모든 인스턴스가 하나의 저장공간을 공유하기에 항상 같은 값을 가진다.
+
+
+    <code>
+
+    </code>
+* 출처 : https://coding-factory.tistory.com/524
+
