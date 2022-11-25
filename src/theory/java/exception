@@ -1,0 +1,204 @@
+0. Error vs Exception
+    : 런타임 오류를 두 종류로 본다. 1) 에러(Error) 2) 예외(Exception)
+    - 에러는 프로그램이 코드로 복구될 수 없는 오류를 의미한다.
+    - 예외는 프로그래머가 직접 예측하여 막을 수 있는 처리가능한 오류이다.
+    - Compile시에 발견하지 못하는 에러를 Runtime에러라고 하는데 이때는 프로그래머가 예측하여 처리해주어야한다.
+    - 이러 예외가 발생했을 때 어떤 동작을 처리해야하는지를 예외처리라고 한다.
+
+1. 예외 처리(try & catch)
+    - 자바에서 모든 예외는 Exception이라는 클래스를 상속받는다.
+    - 예외 처리 방식
+    <code>
+        try{
+        	//예외가 발생될만한 코드
+        }catch(FileNotFoundException e){	//FileNotFoundException이 발생했다면
+
+        }catch(IOException e){ //IOException이 발생했다면
+
+        }catch(Exception e){	//Exception이 발생했다면
+
+        }finally{
+        	///어떤 예외가 발생하던 말던 무조건 실행
+        }
+    </code>
+
+    1) try Block
+        : 이 블록에서 예외가 발생할만한 코드가 쓰여진다.
+
+    2) catch Block
+        - 이 부분에서 예외가 발생되었을 때 처리하는 동작을 명시한다.
+        - catch블록은 여러 개가 있을 수 있다.
+        - 맨 처음 catch 블록에서 잡히지 않는 예외라면 다음 catch의 예외를 검사한다.
+        - 이때 상속관계에 있는 예외 중 부모가 위의 catch, 그리고 그 자식 예외 클래스가 아래의 catch로 놓일 순 없다.
+        <code>
+            try{
+            	//.. 중략 ..//
+            } catch (Exception e){
+            	//컴파일 오류 발생
+            } catch (IOException e){
+
+            }
+        </code>
+        - Exception 클래스는 모든 예외의 부모이기 때문에 Exception을 IOException보다 위에서 처리할 수는 없다는 뜻이다.
+        - 이유는 IOException의 catch블록은 도달할 수 없는 코드이기 때문이다.
+
+    3) finally Block
+        - 예외가 발생하건 발생하지 않건 공통으로 수행되어야할 코드가 쓰여진다.
+        - 임시 파일의 삭제 등 뒷정리 코드가 쓰인다.
+
+    4) 최종 코드 - TryCatch
+    <code>
+        package theory.java.source.exception;
+
+        public class TryCatch {
+            public static void main(String[] args) {
+                int a,b;
+                a=10;
+                b=0;
+                try {
+                    int c=a/b;
+                    System.out.println(c);	//예외발생으로 실행 불가한 코드
+                }catch(ArithmeticException e) {
+                    System.out.println("ArithmeticException 발생");
+                    System.out.println("0으로 나눌 수는 없습니다");
+                    e.printStackTrace();
+                }finally {
+                    System.out.println("finally 실행");
+                }
+            }
+        }
+
+        // 출력
+        // ArithmeticException 발생
+        // 0으로 나눌 수는 없습니다
+        // finally 실행
+        // java.lang.ArithmeticException: / by zero
+        //	at theory.java.source.exception.TryCatch.main(TryCatch.java:9)
+    </code>
+
+2. 예외 처리 (throws)
+    : 예외를 여기서 처리하지 않을테니 나를 불러다가 쓰는 녀석에게 에러 처리를 전가하겠다는 의미 (던지다)
+    <code>
+        package theory.java.source.exception;
+
+        public class Throws {
+            public static void divide(int a,int b) throws ArithmeticException {
+                if(b==0) throw new ArithmeticException("0으로 나눌 수는 없다니까?");
+                int c=a/b;
+                System.out.println(c);
+            }
+            public static void main(String[] ar){
+                int a=10;
+                int b=0;
+
+                divide(a,b);
+            }
+        }
+    </code>
+
+3. Exception 대표 종류
+    1) NullPointerException(NPE)
+        - 객체 참조가 없는 상태, 즉 null 값을 가지고 있는 참조 변수로 객체 접근 연산자인 도트(.)를 사용했을 때 발생한다.
+        - 해당 객체가 null인 상태에서의 접근ㅇ르 했을 때 해당 값이 null에 대한 근ㅇ르 하여 발생하는 에러로,
+          객체가 없는 상태에서 객체를 사용하려 하였으나 해당 객체는 없는 상태이기 때문에 발생하는 에러라고 볼 수 있다.
+
+          <code>
+             package theory.java.source.exception;
+
+             public class NullPointerException {
+
+                 public static void main(String[] args) {
+                     String data = null;
+                     System.out.println(data.toString());
+                 }
+
+             }
+             // 출력
+             // Exception in thread "main" java.lang.NullPointerException
+             //   at theory.java.source.exception.NullPointerException.main(NullPointerException.java:7)
+
+          </code>
+          => data라는 변수에 null값을 세팅했기 때문에 출력 부분에서 data.toString()을 통해
+             해당 객체의 toString() 값을 출력하고 싶었으나, 해당 객체는 null이기 때문에 null에는
+             toString()을 사용할 수 없다.
+
+    2) ArrayIndexOutOfBoundsException
+        - 배열에서 할당된 배열의 인덱스 범위를 초과해서 사용할 경우 발생하는 에러
+        <code>
+            package theory.java.source.exception;
+
+            public class ArrayIndexOutOfBoundsException {
+                public static void main(String[] args) {
+                    int[] arr = new int[3];
+                    for (int i = 0; i <=3; i++) {
+                        arr[i] = i;
+                    }
+                }
+            }
+            // 출력
+            // Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: 3
+            // 	at theory.java.source.exception.ArrayIndexOutOfBoundsException.main(ArrayIndexOutOfBoundsException.java:7)
+        </code>
+
+    3) NumberFormatException
+        - primitive <-> wrapper class 행위를 할 때 특정 타입으로 변경 불가할 때 발생하는 에러
+          ex) 문자열을 숫자로 바꿀 때 숫자로 변환될 수 없는 문자가 올때
+          <code>
+              package theory.java.source.exception;
+
+              public class NumberFormatException {
+                  public static void main(String[] args) {
+                      String corretData = "100";  // 문자열 100은 숫자로 변환 할 수 있는 값이다.
+                      String wrongData = "A100";  // 문자열 A100은 숫자로 변환 할 수 있는 값이다.
+
+                      int value1 = Integer.parseInt(corretData);
+                      int value2 = Integer.parseInt(wrongData);
+
+                      System.out.println(value1);
+                      System.out.println(value2);
+                  }
+              }
+              // 출력
+              // Exception in thread "main" java.lang.NumberFormatException: For input string: "A100"
+              // 	at java.lang.NumberFormatException.forInputString(NumberFormatException.java:65)
+              // 	at java.lang.Integer.parseInt(Integer.java:580)
+              // 	at java.lang.Integer.parseInt(Integer.java:615)
+              // 	at theory.java.source.exception.NumberFormatException.main(NumberFormatException.java:9)
+
+          </code>
+
+    4) ClassCastException
+        - 타입 변환(Casting)은 상위 클래스와 하위 클래스간에 발생하고 구현 클래스와 인터페이스 간에도 발생한다.
+        - 이러한 관계가 아니면 클래스는 다른 클래스를 타입으로 변환할 수 없다.
+        - 여기서 억지로 타입변환을 시도할 경우 발생된다.
+
+        <code>
+            package theory.java.source.exception;
+
+            public class ClassCastExceptionExample {
+                static class Animal {}
+                static class Dog extends Animal{}
+                static class Cat extends Animal{}
+
+
+                public static void main(String[] args) {
+                    // Dog 객체 생성
+                    Dog dog = new Dog();
+                    changeDog(dog);
+
+                    // Cat 객체 생성
+                    Cat cat = new Cat();
+                    changeDog(cat);
+                }
+                public static void changeDog(Animal animal) {
+                    Dog dog = (Dog) animal; // ClassCastException 발생 가능
+                }
+            }
+        </code>
+        // 출력
+        // Exception in thread "main" java.lang.ClassCastException: theory.java.source.exception.ClassCastExceptionExample$Cat cannot be cast to theory.java.source.exception.ClassCastExceptionExample$Dog
+        // 	 at theory.java.source.exception.ClassCastExceptionExample.changeDog(ClassCastExceptionExample.java:19)
+        // 	 at theory.java.source.exception.ClassCastExceptionExample.main(ClassCastExceptionExample.java:16)
+
+* 출처 : - https://reakwon.tistory.com/155
+        - https://dreamcoding.tistory.com/70

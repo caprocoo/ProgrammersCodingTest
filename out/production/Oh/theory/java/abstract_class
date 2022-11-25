@@ -46,14 +46,60 @@
     => 추상 클래스도 일반 클래스와 마친가지로 필드, 생성자, 메서드를 선언할 수 있다.
        또한 자식 객체가 생성될 때 super를 호출하므로 생성자가 반드시 있어야 한다.
 
-    2) Animal 을 상속받은 Dog
+    2) Animal을 상속받은 Dog
     <code>
+        package theory.java.source._abstract_class;
+
+        public class Dog extends Animal{
+
+            public Dog(String name, int age) {
+                super(name, age);
+            }
+
+            @Override
+            public void bark() { //메서드 오버라이딩
+                System.out.println("멍멍!!");
+            };
+        }
 
     </code>
 
+    3) Animal을 상속받은 Cat
     <code>
+        package theory.java.source._abstract_class;
 
+        public class Cat extends Animal{
+
+            public Cat(String name, int age) {
+                super(name, age);
+            }
+
+            @Override
+            public void bark() { //메서드 오버라이딩
+                System.out.println("야옹~~");
+            };
+        }
     </code>
+
+    4) Main에서 확인
+    <code>
+        package theory.java.source._abstract_class;
+
+        public class Main {
+
+            public static void main(String[] args) {
+                Dog dog = new Dog("강아지",3);
+                Cat cat = new Cat("고양이",3);
+
+                dog.move();
+                dog.bark();
+
+                cat.move();
+                cat.bark();
+            }
+        }
+    </code>
+
 
 * 출처 : https://coding-factory.tistory.com/866
 
