@@ -1,0 +1,204 @@
+1. CMD
+    1) 실행 및 구조 확인
+        (1) 실행
+            //SQLPLUS 실행(일반 사용자)
+            cmd> sqlplus 사용자명/"암호"
+
+        (2) 테이블
+
+            //테이블 목록 확인
+            cmd> SELECT * FROM TAB;
+
+            //테이블 구조 확인
+            cmd> DESC[RIBE] 테이블명;
+            cmd> SELECT * FROM COL WHERE tname = '테이블명';
+                 (테이블 명은 반드시 대문자로 명시해야 한다.)
+
+    2) sql 파일 실행
+
+    // sqlplus에서 *.sql 파일 실행
+        (1) 파일이 존재하는 경로에서 sqlplus 실행 후 "@파일명" 명령 실행
+            cmd> @ex.sql
+
+                (2) 경로를 지정해서 실행
+            cmd> @d:\sql\ex.sql
+
+2. 문법
+    1) 연산자
+        (1) 산술 연산자
+            '+' : 덧셈
+            '-' : 뺄셈
+            '*' : 곱셈
+            '/' : 나눗셈
+            '()' : 괄호
+
+        (2) 비교 연산자
+            '=' : 같다
+            '>' : 크다
+            '>=' : 크거나 같다
+            '<' : 작다
+            '<=' : 작거나 같다
+            '<>' : 같지 않다
+            '!=' : 같지 않다
+
+        (3) 논리 연산자
+            'AND' : 논리 곱
+            'OR' : 논리 합
+            'NOT' : 부정
+
+        (4) SQL 연산자
+            'IN(값, 값, ...)' : 피연산자가 식 목록 중 하나와 동일한 경우 TRUE
+            'BETWEEN ~ AND' : 피연산자가 범위 안에 있는 경우 TRUE
+            'LIKE' : 피연산자가 패턴과 일치하는 경우 TRUE
+
+        (5) 문자열 연결 연산자
+            '||' : 문자열 연결
+
+        ※ '를 출력할 경우에는 '을 두 번 쓴다.
+
+    2) 자료 검색
+        (1) 형식
+            : SELECT 필드명, 필드명 ... FROM 테이블
+        (2) 실행순서
+            : FROM절 -> WHERE절 -> ROWNUM 할당 ->GROUP BY절 -> HAVING -> SELECT절 -> ORDER BY절
+        (3) 필드명 변경
+            : SELECT 필드명 AS 변경명, 필드명 AS 변경명 FROM 테이블
+              (AS는 생략가능)
+        (4) 조건 검색
+            : SELECT 필드명, 필드명 ... FROM 테이블 WHERE 조건
+
+    3) DUAL
+        : DUAL 테이블은 데이터 딕셔너리와 함께 Oracle에 의해 자동으로 생성되는 테이블로
+          사용자 SYS의 스키마에 존재하며, 모든 사용자가 사용 가능하다.
+        - SELECT * FROM dual;
+
+3. 문자 함수 - 단일행 함수(single row, 스칼라)
+
+    1) SUBSTR(char, m, [n]) : 문자열 추출. 인덱스는 1부터 시작한다.
+
+        // result = kor
+        SELECT SUBSTR('seoul korea', 7, 3) FROM dual;
+
+        // result = kor
+        SELECT SUBSTR('seoul korea', -5, 3) FROM dual;
+
+        // result = korea
+        SELECT SUBSTR('seoul korea', 7) FROM dual;
+
+        // insa 테이블 중 name, city, ssn을 출력하되 city가 서울이면서 주민번호(ssn이용) 이ㅛㅇㅇ하여 남자인 사람만 출력
+        SELECT name, city, ssn
+        FROM insa
+        WHERE city = '서울' AND (SUBSTR(ssn, 8, 1) = '1' OR SUBSTR(ssn, 8, 1) ='3');
+
+    2) LENGTH(column | expression) : 문자열 길이 / LENGTHHB(column | expression) : 문자열 바이트 수
+                                                 (11g에서 한글으 UTF-8로 처리)
+        //result = 4
+        SELECT LENGTH('대한민국') FROM dual;
+
+        //result = 12
+        SELECT LENGTHHB('대한민국') FROM dual;
+
+    3) INSTR(column | expression, 'string', m, n)
+        : 문자의 위치를 반환한다.
+          m은 시작위치이고, n값은 발생 횟수이며 m과 n의 기본 값은 1이다.
+          문자가 없으면 0을 반환한다.
+
+        // name, city 출력 : 성씨가 김인 사람만 출력
+        SELECT name, city
+        FROM insa
+        WHERE INSTR(name, '김')>=1;
+
+        // name, city 출력 : 이름(성씨포함)에 '이' 가 포함된 사람만 출력
+        SELECT name, city
+        FROM insa
+        WHERE INSTR(name, '이')>=1;
+
+    4) LPAD(column | expression, n, 'string'), RPAD(column | expression, n, 'string'),
+        : expression의 문자열을 제외한 공간에 문자열을 왼쪽/오른쪽에 채운다.
+
+        //result = *****korea
+        SELECT LPAD('korea', 10, '*') FROM dual;
+
+        //result = kor
+        SELECT LPAD('korea', 3, '*') FROM dual;
+
+        //result = NULL
+        SELECT LPAD('*', 0, '*') FROM dual;
+
+    5) REPLACE (text, 'search_string', 'replace_string') : 문자열 치환
+
+        //result = 1236848288
+        SELECT REPLACE('12365845852588', '5') FROM dual
+
+    6) TRANSLATE (char, 'from_string', 'to_string')
+        : char 내에 포함된 문자 중 from_string에 지정한 모든 각각의 문자를 to_string 문자로 각각 변경한다.
+
+        //result = ababddd
+        SELECT TRANSLATE('ababccc', 'c', 'd') FROM dual;
+
+    7) RTRIM(string, string), LTRIM(string, string)
+        : 공백을 제거하거나 오른쪽/왼쪽의 문자열 제거
+
+        //result = 우리나라
+        SELECT RTRIM('우리나라대한', '대한') FROM dual
+
+    8) 그 외
+        - UPPER(char)   : 영문자 문자열을 모두 대문자로 변환
+        - LOWER(char)   : 영문자 문자열을 모두 소문자로 변환
+        - ASC II(char)  : 주어진 char의 첫 글자의 아스키 값을 반환
+        - CHR(n)        : 입력된 수의 바이너리 코드에 해당하는 문자를 반환
+        - INITCAP(char) : 입력 문자열 중에서 각 단어의 첫 문자를 대문자로, 나머지 문자는 소문자로 변환
+
+        //result = korea
+        SELECT CHR(75)||CHR(79)||CHR(82)||CHR(69)||CHR(65) FROM dual;
+
+
+
+- 출처 : https://developer-java.tistory.com/15
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
