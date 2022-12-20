@@ -152,7 +152,52 @@
         //result = korea
         SELECT CHR(75)||CHR(79)||CHR(82)||CHR(69)||CHR(65) FROM dual;
 
+4. 숫자 함수
+    1) MOD(m, n) : m을 n으로 나눈 나머지
 
+        //result = 1
+        SELECT MOD(13, 2) FROM dual;
+
+    2) ROUND(n, m) : 반올림
+
+        //result = 15.2
+        SELECT ROUND(15.193, 1) FROM dual;
+
+        //result = 15
+        SELECT ROUND(15.193, 0) FROM dual;
+
+        //result = 15
+        SELECT ROUND(15.193) FROM dual;
+
+        //result = 20
+        SELECT ROUND(15.193, -1) FROM dual;
+
+
+5. 변환함수
+    1) TO_CHAR(n, m) - VARCHAR2 타입
+        : 숫자를 문자로 변환 / 날짜를 문자로 변환
+
+        ※ 날짜 형식
+        - YYYY : 4자리 연도로 표시
+        - YEAR : 연도를 알파벳으로 표시
+        - MM : 달을 숫자로 표시
+        - MON : 달을 알파벳 약어로 표시
+        - MONTH : 달을 알파벳으로 표시
+        - DD : 일자를 숫자로 표시
+        - DAY : 일에 해당하는 요일
+        - DY : 일에 해당하는 요일의 약어
+        - D : 일에 해당하는 요일을 숫자로 표시(1~7)
+        - HH : 12시간으로 표시 (1-12)
+        - HH24 : 24시간으로 표시 (0-23)
+        - MI : 분을 표시
+        - SS : 초를 표시
+        - AM/PM : 오전/오후
+
+        SELECT TO_CHAR(SYSDATE, 'YYYY-MM-DD') FROM dual;
+        SELECT TO_CHAR(SYSDATE, 'YYYY"년" MM"월" DD"일"') FROM dual;
+
+
+    2)
 
 - 출처 : https://developer-java.tistory.com/15
 
