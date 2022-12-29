@@ -172,5 +172,33 @@
         - 이러한 관계가 아니면 클래스는 다른 클래스를 타입으로 변환할 수 없다.
         - 여기서 억지로 타입변환을 시도할 경우 발생된다.
 
+        <code>
+            package theory.java.source.exception;
+
+            public class ClassCastExceptionExample {
+                static class Animal {}
+                static class Dog extends Animal{}
+                static class Cat extends Animal{}
+
+
+                public static void main(String[] args) {
+                    // Dog 객체 생성
+                    Dog dog = new Dog();
+                    changeDog(dog);
+
+                    // Cat 객체 생성
+                    Cat cat = new Cat();
+                    changeDog(cat);
+                }
+                public static void changeDog(Animal animal) {
+                    Dog dog = (Dog) animal; // ClassCastException 발생 가능
+                }
+            }
+        </code>
+        // 출력
+        // Exception in thread "main" java.lang.ClassCastException: theory.java.source.exception.ClassCastExceptionExample$Cat cannot be cast to theory.java.source.exception.ClassCastExceptionExample$Dog
+        // 	 at theory.java.source.exception.ClassCastExceptionExample.changeDog(ClassCastExceptionExample.java:19)
+        // 	 at theory.java.source.exception.ClassCastExceptionExample.main(ClassCastExceptionExample.java:16)
+
 * 출처 : - https://reakwon.tistory.com/155
         - https://dreamcoding.tistory.com/70
