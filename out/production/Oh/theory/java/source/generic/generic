@@ -45,6 +45,11 @@ Generic
         <? super T>   // T 타입과 T 타입이 상속받은 조상 클래스 타입만을 사용할 수 있음.
     </code>
 
+
+5. 제네릭 클래스 (Java Generic Class)
+    : 
+
+
 * 출처 :
  - http://www.tcpschool.com/java/java_generic_concept
  - http://www.tcpschool.com/java/java_generic_various
