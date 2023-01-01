@@ -2,6 +2,7 @@ package programmers;
 
 
 import java.util.List;
+import java.util.Optional;
 //
 //public class Ground {
 //
@@ -23,16 +24,15 @@ import java.util.List;
 
 public class Ground {
 
-    public void myMethod(int value) {
+    public static void main(String[] args) {
 
-    }
+        Optional<String> optionalEmpty = Optional.empty();
+        System.out.println(optionalEmpty);
+        System.out.println(optionalEmpty.isPresent()); // false
 
-    public class MyOtherClass {
-        public void myMethodCall(Ground myClass) {
-            double d = 0.5;
-            String a = "aaa";
-            myClass.myMethod(1);
-        }
+        Optional<String> opt = Optional.ofNullable(Object.class.getName());
+        String name = opt.orElse("isNull");
+        System.out.println(name);
     }
 }
 

@@ -13,3 +13,19 @@
         2) Optional<String> optVal = Optional.of("abc");
         3) Optional<String> optVal = Optional.of(null);         // NullPointerException 발생
         4) Optional<String> optVal = Optional.ofNullable(null); // OK
+
+3. Optional로 NULL 체크 대체하기
+    - Wrapper 클래스이기 때문에 빈 값이 올 수 있으며, 빈 객체는 empty() 메서드로 생성할 수 있다.
+    - orElse 또는 orElseGet 메서드로 NULL인 경우라도 다른 값을 리턴할 수 있다.
+
+    <code>
+        Optional<String> optionalEmpty = Optional.empty();
+        System.out.println(optionalEmpty);
+        System.out.println(optionalEmpty.isPresent()); // false
+
+        Optional<String> opt = Optional.ofNullable(Object.getName());
+        String name = opt.orElse("isNull");
+    </code>
+
+
+- 출처 : https://frtt0608.tistory.com/152
