@@ -10,7 +10,7 @@
        default와 static으로 선언된 method가 아니면 추상메서드의 의미로 반드시 재정의가 필요하다.
        default로 선언된 method는 재정의(override)를 할 수 있고, static은 재정의를 할 수 없다.
 
-    3-1. Comparable & Comparator - "객체를 비교할 수 있도록 만든다."
+    3-1 Comparable & Comparator - "객체를 비교할 수 있도록 만든다."
          : 우리는 보통 primitive 타입의 실수 변수(byte, int, double ...)의 경우는 부등호를 갖고 쉽게 비교가 가능하다.
            하지만 객체를 비교할 때는 어떻게 비교할까??
            어떤 필드를 기준으로 비교해야 할 것인가??
