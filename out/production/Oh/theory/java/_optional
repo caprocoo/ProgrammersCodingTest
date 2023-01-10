@@ -23,8 +23,9 @@
         System.out.println(optionalEmpty);
         System.out.println(optionalEmpty.isPresent()); // false
 
-        Optional<String> opt = Optional.ofNullable(Object.getName());
+        Optional<String> opt = Optional.ofNullable(Object.class.getName());
         String name = opt.orElse("isNull");
+        System.out.println(name);
     </code>
 
 
