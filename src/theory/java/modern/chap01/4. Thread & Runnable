@@ -54,11 +54,6 @@
                클래스의 확장성이 중요하다면 Runnable 인터페이스를 구현해 Thread에 주입하는 것이 더 효율적이다.
 
 
-
-
-
-
-
-
-* 출처 : - https://mangkyu.tistory.com/258
-        - https://hyeo-noo.tistory.com/293
+* 출처 : - https://mangkyu.tistory.com/258        // Thread & MultiThread
+        - https://hyeo-noo.tistory.com/293       // Thread & Runnable Example
+        - https://wikidocs.net/230               // Links to watch when you do not understand (description & example)
