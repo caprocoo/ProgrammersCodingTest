@@ -1,8 +1,24 @@
-* 동작 파라미터화 코드 전달하기 p.67
+* 모던 자바 인 액션 chap02 - 동작 파라미터화 코드 전달하기 p.67
 
 2. Predicate?
     - argument를 받아 boolean 값을 반환하는 함수형 인터페이스
-        1) 함수형 인터페이스란 1개의 추상 메소드를 갖고 있는 인터페이스로 써 @FunctionalInterface 어노테이션을 사용한다.
+        1) 함수형 인터페이스란 1개의 추상 메소드를 갖고 있는 인터페이스로써 @FunctionalInterface 어노테이션을 사용한다. (단 하나)
+           * default 메서드가 많더라도 추상 메서드가 오직 하나면 함수형 인터페이스이다.
+           * 함수형 인터페이스에 두 개 이상의 메서드가 선언되면 오류를 발생시킨다.
+           <code>
+               //구현해야 할 메소드가 한개이므로 Functional Interface이다.
+               @FunctionalInterface
+               public interface Math {
+                   public int Calc(int first, int second);
+               }
+
+               //구현해야 할 메소드가 두개이므로 Functional Interface가 아니다. (오류 사항)
+               @FunctionalInterface
+               public interface Math {
+                   public int Calc(int first, int second);
+                   public int Calc2(int first, int second);
+               }
+           </code>
         2) default나 static 메소드의 제한은 없다.
         3) Java8부터 지원된 람다식은 함수형 인터페이스로 접근이 가능하다.
         4) Predicate 외에도 Consumer, Supplier, Function, Comparator 등이 있다.
@@ -86,4 +102,5 @@
             </code>
 
 
-* 출처 : - https://yeonyeon.tistory.com/200   // Predicate
+* 출처 : - https://yeonyeon.tistory.com/200                                   // Predicate description
+        - https://khj93.tistory.com/entry/JAVA-람다식Rambda란-무엇이고-사용법     // FunctionalInterface description

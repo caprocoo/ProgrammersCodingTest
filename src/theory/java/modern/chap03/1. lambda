@@ -1,0 +1,190 @@
+* 모던 자바 인 액션 chap03 - 람다 표현식 p.87
+
+1. 람다(lambda)함수란?
+    - 프로그래밍 언어에서 사용되는 개념으로 익명 함수(Anonymous functions)를 지칭하는 용어이다.
+    - 간단히 말하면 수학에서 사용하는 함수를 보다 단순하게 표현하는 방법이다.
+
+    1-1. 람다의 특징
+        - 람다 대수는 이름을 가질 필요가 없다. : 익명 함수
+        - 두 개 이상의 입력이 있는 함수는 최종적으로 1개의 입력만 받는 람다 대수로 단순화 될 수 있다.
+        * 익명함수란?
+            => 말 그대로 함수의 이름이 없는 함수이며, 공통으로 일급 객체(First Class citizen)라는 특징을 가지고 있다.
+
+    1-2. 일급 객체(First Class citizen)란?
+        - 일급 객체란 아래 3가지 조건을 충족하면 일급 객체라고 할 수 있다.
+        - 아래의 Java와 Kotlin의 예시를 통해 왜 Kotlin 함수는 왜 일급 객체이고, Java 함수는 일급 객체가 아닌지 설명한다.
+            1) 변수나 데이터에 할당할 수 있어야 한다.
+                - Kotlin
+                <code>
+                    object Main {
+                        @JvmStatic
+                        fun main(args: Array<String>) {
+                            val a = test
+                        }
+
+                        val test: () -> Unit = { println("kotlin") }
+                    }
+                </code>
+                => Kotlin은 변수 a에 test 함수 할당이 가능하다.
+
+                - Java
+                <code>
+                    public class java {
+
+                        public static void test(){
+                            System.out.println("java");
+                        }
+
+                        public static void main(String[] args) {
+                            System.out.println("java");
+                    //        Object a = test;
+                        }
+                    }
+                </code>
+                => Java는 변수에 함수 할당이 불가능하다.
+            2) 객체의 인자로 넘길 수 있어야 한다.
+                - Kotlin
+                <code>
+                    object Main {
+                        @JvmStatic
+                        fun main(args: Array<String>) {
+                            function(test)
+                        }
+
+                        fun function(f: () -> Unit) {
+                           f.invoke()
+                        }
+
+                        val test: () -> Unit = { println("kotlin") }
+                    }
+                </code>
+                => Kotlin은 function 함수의 인자로 함수타입(test)을 전달할 수 있다.
+
+                - Java
+                => Java는 함수의 인자로 함수타입을 전달할 수 없다.
+
+            3) 객체의 리턴값으로 리턴할 수 있어야 한다.
+                - Kotlin
+                <code>
+                    object Main {
+                        @JvmStatic
+                        fun main(args: Array<String>) {
+                            function()
+                        }
+
+                        fun function(): () -> Unit {
+                            return { println("kotlin") }
+                        }
+
+                    }
+                </code>
+                => function 함수는 {println("kotlin")}, 즉 함수 타입을 반환한다.
+
+                - Java
+                => Java는 불가능하다.
+
+    1-3 람다의 장단점
+        1) 장점
+            (1) 코드의 간결성
+                : 불필요한 반복문의 삭제가 가능하며 복잡한 식을 단순하게 표현할 수 있다.
+            (2) 지연연산 수행
+                : 지연연상을 수행함으로써 불필요한 연산을 최소화할 수 있다.
+            (3) 병렬처리 가능
+                : 멀티쓰레드를 활용하여 병렬처리를 사용할 수 있다.
+        2) 단점
+            (1) 람다의 호출이 까다롭다.
+            (2) 람다 Stream 사용 시 단순 for문 혹은 while문 사용 시 성능이 떨어진다.
+            (3) 너무 사용하게 되면 오히려 가독성을 떨어뜨릴 수 있다.
+
+    1-4 람다의 표현식
+        1) 람다는 매개변수 화살표 '->'' 함수몸체로 이용하여 사용할 수 있다.
+        2) 함수몸체가 단일 실행문이며 괄호 '{}'를 생략할 수 있다.
+        3) 함수몸체가 return 문으로만 구성되어 있는 경우 괄호{}를 생략할 수 없다.
+
+        - example
+        <code>
+            //정상적인 유형
+            () -> {}            // parameter X, return void
+            () -> 1             // parameter X, return int
+            () -> { return 1; } // parameter X, return int
+
+            (int x) -> x+1
+            (x) -> x+1
+            x -> x+1
+            (int x) -> { return x+1; }
+            x -> { return x+1; }
+
+            (int x, int y) -> x+y
+            (x, y) -> x+y
+            (x, y) -> { return x+y; }
+
+            (String lam) -> lam.length()
+            lam -> lam.length()
+            (Thread lamT) -> { lamT.start(); }
+            lamT -> { lamT.start(); }
+
+            //잘못된 유형 선언된 type과 선언되지 않은 type을 같이 사용 할 수 없다.
+            (x, int y) -> x+y
+            (x, final y) -> x+y
+
+
+            // 모던 자바 인 액션 람다 예제 P.91
+            (List<String> list)-> list.isEmpty()                                // 불리언 표현식
+            () -> new Apple(10)                                                 // 객체 생성
+            (Apple a) -> { System.out.println(a.getWeight()); }                 // 객체에서 소비
+            (String s) => s.length()                                            // 객체에서 선택/추출
+            (int a, int b) -> a * b                                             // 두 값을 조합
+            (Apple a1, Apple a2) -> a1.getWeight().compareTo(a2.getWeight())    // 구 객체 비교
+        <code>
+
+    1-5 자바 8에 추가된 함수형 인터페이스
+        - 함수형 인터페이스느 오직 하나의 추상 메서드를 지정한다.
+
+        1) Predicate<T> : T -> boolean
+            : IntPredicate, LongPredicate, DoublePredicate
+            - 제네릭 형식 T의 객체를 인수로 받아 boolean을 반환한다.
+
+        2) Consumer<T> : T -> void
+            : IntConsumer, LongConsumer, DoubleConsumer
+            - 제네릭 형식 T의 객체를 인수로 받아 void를 반환한다.
+
+        3) Function<T, R> : T -> R
+            : IntFunction<R>, IntToDoubleFunction, IntToLongFunction,
+              LongFunction<R>, LongToDoubleFunction, LongToIntFunction,
+              DoubleFunction<R>, DoubleToIntFunction, DoubleToLongFunction,
+              ToIntFunction<T>, ToDoubleFunction<T>, ToLongFunction<T>
+            - 제네릭 형식 T의 객체를 인수로 받아 제네릭 형식 R을 반환한다.
+
+        4) Supplier<T> : () -> T
+            : BooleanSupplier, IntSupplier, LongSupplier, DoubleSupplier
+
+        5) UnaryOperator : T -> T
+            :  IntUnaryOperator, LongUnaryOperator, DoubleUnaryOperator
+
+        6) BinaryOperator : (T, T) -> T
+            : IntBinaryOperator, LongBinaryOperator, DoubleBinaryOperator
+
+        7) BiPredicate<L,R> : (T, U) -> boolean
+
+        8) BiConsumer<T,U> : (T, U) -> void
+            : ObjIntConsumer<T>, ObjLongConsumer<T>, ObjDoubleConsumer<T>
+
+        9) BiFunction<T,U,R> : (T, U) -> R
+            : ToIntBiFunction<T,U>, ToLongBiFunction<T,U>, ToDoubleBiFunction<T,U>
+
+    1-5 람다와 대응하는 함수형 인터페이스 예제
+        <code>
+            // 모던 자바 인 액션 함수형 인터페이스 예제 P.106
+            Predicate<List<String>>             // 불리언 표현식
+            Supplier<Apple>                     // 객체 생성
+            Consumer<Apple>                     // 객체에서 소비
+            Function<String, Integer>,          // 객체에서 선택/추출
+            ToIntFunction<String>
+            IntBinaryOperator                   // 두 값을 조합
+            Comparator<Apple>,                  // 구 객체 비교
+            BiFunction<Apple, Apple, Integer>,
+            ToIntBiFunction<Apple, Apple>
+        </code>
+
+- 출처 : https://khj93.tistory.com/entry/JAVA-람다식Rambda란-무엇이고-사용법                     // Lambda description
+        https://medium.com/@lazysoul/functional-programming-에서-1급-객체란-ba1aeb048059      // First Class citizen description

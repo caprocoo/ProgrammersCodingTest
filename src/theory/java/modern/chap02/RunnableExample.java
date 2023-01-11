@@ -1,6 +1,4 @@
-package theory.java.modern.chap01;
-
-import java.util.Arrays;
+package theory.java.modern.chap02;
 
 /**
  * packageName    : theory.java.modern.chap01

@@ -1,4 +1,4 @@
-package theory.java.modern.chap01;
+package theory.java.modern.chap02;
 
 /**
  * packageName    : theory.java.modern.chap01
