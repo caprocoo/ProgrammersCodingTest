@@ -1,0 +1,59 @@
+* 모던 자바 인 액션 chap02 - 동작 파라미터화 코드 전달하기 p.67
+
+4. Thread & Runnable?
+    - java에서 쓰레드를 구현할 때 2가지 방법이 있다.
+      => Runnable, Thread
+
+    4-1 Thread
+        - 쓰레드란 프로그램 실행의 가장 작은 단위이다.
+        - 일반적으로 자바 애플리케이션을 만들어 실행하면 1개의 main Thread에 의해 프로그램이 실행된다.
+          하지만 1개의 쓰레드만으로는 동시에 여러 작업을 할 수 없다.
+        - 상속을 받아 사용하기에 다른 클래스를 상속받아 사용할 수 없다는 단점이 있다.
+          (일반적으로는 Runnable 인터페이스를 구현해서 쓰레드를 사용한다.)
+        - Thread와 Runnable은 멀티 쓰레드를 위해 제공된 기술이다.
+
+    4-2 Thread Class
+        - Thread는 쓰레드 생성을 위해 Java에서 미리 구현해둔 클래스이다.
+
+        * Thread methods
+        1) sleep
+            - 현재 쓰레드 멈추기
+            - 자원을 놓아주지는 않고, 제어권을 넘겨주므로 데드락이 발생할 수 있다.
+        2) interrupt
+            - 다른 쓰레드를 깨워서 interruptedException을 발생시킨다.
+            - interrupt가 발생한 쓰레드는 예외를 catch하여 다른 작업을 할 수 있다.
+        3) join
+            - 다른 쓰레드의 작업이 끝날 때까지 기다리게 한다.
+            - 쓰레드의 순서를 제어할 때 사용할 수 있다.
+
+    4-3 Thread Example
+        - ThreadExample.java 소스에서 PrintChar 클래스는 문자 하나와 숫자 하나를 인자로 받아서, 해당 문자를 숫자만큼 반복해서 출력하는 쓰레드이다.
+
+    4-4 Runnable
+        - implements Runnable 을 통해서 Runnable 인터페이스를 구현할 수 있다.
+        - Runnable 인터페이스를 구현하게 되면 재사용성이 높고, 코드의 일관성을 유지할 수 있어서 Thread보다 더 효율적인 방법이라 할 수 있다.
+        - 추상 메서드인 run을 반드시 구현해야 한다.
+        - Thread 또한 run을 구현해야 한다는 점은 같지만 추상 메서드가 아닌 단순 메서드 오버라이딩으로 구현한다.
+
+    4-5 Runnable Example
+        - RunnableExample.java 소스에서 PrintNum이라는 Runnable 인터페이스를 구현했기 때문에 Thread 객체를 만들 때 재사용할 수 있음을 볼 수 있다.
+
+    4-6 warning : Thread를 실행할 때 start()와 run()의 차이
+        1) run()
+            - run()을 호출하는 것은 생성된 쓰레드 객체를 실행하는 것이 아니라 단순히 쓰레드 클래스 내부의 run 메서드를 실행하는 것이다.
+            - 즉 main 함수의 쓰레드를 그대로 사용해서 run 메서드를 실행하기 때문에 새로운 쓰레드가 생기지 않고 병렬처리를 할 수 없다.
+        2) start()
+            - 반면 start()는 새로운 쓰레드를 실행하는데 필요한 호출 스택(call stack)을 생성한 다음에 run을 호출한다.
+              생성된 호출 스택에 run()이 첫 번째로 저장되게 한다.
+            - 즉, start()를 호출하면 쓰레드를 새롭게 생성해서 해당 쓰레드를 runnable한 상태로 만든 후 run()메서드를 실행하게 된다.
+              따라서 start()를 호출해야만 멀티쓰레드로 병렬 처리가 가능해진다.
+
+        * 그렇다면 추상 메서드로 run() 밖에 존재하지 않는 Runnable은 왜 사용하는 것일까?
+            => Thread를 바로 사용하려면 상속 받아야 하기에 Thread를 상속받는 경우 다른 클래스를 상속받지 못한다.
+               하지만 Runnable 인터페이스를 구현한 경우에는 다른 인터페이스를 추가로 구현할 수 있을 뿐만 아니라 다른 클래스도 상속받을 수 있다.
+               클래스의 확장성이 중요하다면 Runnable 인터페이스를 구현해 Thread에 주입하는 것이 더 효율적이다.
+
+
+* 출처 : - https://mangkyu.tistory.com/258        // Thread & MultiThread
+        - https://hyeo-noo.tistory.com/293       // Thread & Runnable Example
+        - https://wikidocs.net/230               // Links to watch when you do not understand (description & example)

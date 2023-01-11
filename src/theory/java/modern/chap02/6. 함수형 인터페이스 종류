@@ -1,0 +1,44 @@
+6. 함수형 인터페이스 종류
+    - java.util.function은 Java에서 자주 사용되는 함수형 인터페이스를 미리 정의해둔 패키지이다.
+    - 대표적으로 다음과 같은 함수형 인터페이스가 존재한다. ( ** chap03 / 1.lambda / 1-5 항목 참조)
+        1) Predicate<T> : T -> boolean
+        2) Consumer<T> : T -> void
+        3) Function<T, R> : T -> R
+            - T 타입을 받아서 R 타입을 리턴하는 함수형 인터페이스이다.
+              (선행 인수를 받아 후행 인수를 리턴함)
+            - 아래의 코드는 Integer 타입을 받아 Integer 타입을 리턴한다.
+            <code>
+                public static void main(String[] args) {
+                	Function<Integer, Integer> plus10 = (i) -> i + 10;
+                	System.out.println(plus10.apply(1)); // 11 출력
+                }
+            </code>
+            => apply()를 통해 매개변수를 전달할 수 있다.
+            - 함수를 조합할 수 있는 default 메서드인 andThen()과 compose()를 제공한다.
+            - andThen()은 인수로 들어오는 함수를 나중에 적용하고, compose()는 인수로 들어오는 함수를 먼저 적용한다.
+            <code>
+                public static void main(String[] args) {
+                    Function<Integer, Integer> a = (i) -> i + 10;
+                    Function<Integer, Integer> b = (i) -> i * 2;
+
+                    a.andThen(b).apply(2);      // (10 + 2) * 2 = 24
+                    a.compose(b).apply(2);      // (2 * 2) + 10 = 14
+
+                }
+            </code>
+
+        4) Supplier<T> : () -> T
+        5) UnaryOperator : T -> T
+        6) BinaryOperator : (T, T) -> T
+        7) BiPredicate<L,R> : (T, U) -> boolean
+        8) BiConsumer<T,U> : (T, U) -> void
+        9) BiFunction<T,U,R> : (T, U) -> R
+            - 두 개의 입력 값 (T, U)를 받아서 R 타입을 리턴하는 함수형 인터페이스이다.
+            - 예시
+            <code>
+
+            </code>
+
+
+
+* 출처 : - https://jjingho.tistory.com/80

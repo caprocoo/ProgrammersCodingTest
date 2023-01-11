@@ -1,0 +1,108 @@
+* 모던 자바 인 액션 chap02 - 동작 파라미터화 코드 전달하기 p.67
+
+5. Callable interface? : return 값이 있는 쓰레드
+
+    5-1 Runnable vs Callable
+        1) Runnable
+            - 쓰레드를 사용하려면 Runnable을 구현해야 한다.
+            - Runnable의 run 메서드는 리턴 값이 없다.
+
+            <code>
+                @FunctionalInterface
+                public interface Runnable {
+                    public abstract void run();
+                }
+            </code>
+
+        2) Callable
+            - Runnable과 비슷하지만 Callable은 특정 타입의 return 값이 있다.
+            - 단, Thread 클래스에 바로 구현을 할 수 없고 Executors 같은 쓰레드 풀과 Future을 이용해야 한다.
+            - Callable 객체를 만들고 ExecutorService에 등록한 다음 Future 객체를 반환받아 핸들링하는 형태로 사용한다.
+
+            <code>
+                // 익명 구현 클래스
+                Callable<String> implementAnonymousClass = new Callable<String>() {
+                    @Override
+                    public String call() throws Exception {
+                        return "AnonymousClass";
+                    }
+                };
+                String call1 = implementAnonymousClass.call();
+
+                // 람다
+                Callable<String> implementLambda = () -> "Lambda";
+                String call2 = implementLambda.call();
+            </code>
+
+        3) Callable 사용법
+            1) Callable 작업(구현체) 생성
+            2) Thread Pool 생성
+            3) ExecutorService 인스턴스의 submit()을 이용해 Callable 작업을 전달하고 Future 인스턴스를 받음(작업이 시작됨)
+            4) 받은 Future 인스턴스를 이용하여 Callable return 값을 받음
+            5) Thread Pool 종료
+
+            <code>
+                // 1. Callable 작업(구현체) 생성 - 람다
+                Callable<String> implementLambda = () -> "Lambda";
+
+                // 2. Thread Pool 생성
+                ExecutorService executorService = Executors.newCachedThreadPool();
+
+                // 3. submit()을 이용해 Callable 작업을 전달하고 Future 인스턴스를 리턴받음 (작업이 시작됨)
+                Future<String> submit = executorService.submit(implementLambda);
+
+                // 4. Future 인스턴스를 이용하여 Callable 작업 결과를 받음
+                String result = submit.get();
+
+                // 5. 잊지말고 Thread Pool 종료
+                executorService.shutdown();
+            </code>
+
+        4) Future get()
+            - get()을 이용하여 Callable 작업의 결과 값을 받아올 수 있다.
+            - get() 메서드 호출 시 Blocking Call이 발생하여 결과 값을 가지고 올 때까지 멈춘다.
+            - 따라서 get() 메서드 호출 뒤에 작업은 Callable 작업이 끝날 때까지 기다려야 되는 문제가 생긴다.
+
+            - 예제
+            <code>
+                // 0. 시간 체크
+                System.out.println("start: " + LocalDateTime.now());
+
+                // 1. Callable 작업(구현체) 생성 (5초 뒤 값 리턴)
+                Callable<String> implementLambda = () -> {
+                    Thread.sleep(5000);
+                    return "Lambda";
+                };
+
+                // 2. Thread Pool 생성
+                ExecutorService executorService = Executors.newCachedThreadPool();
+
+                // 3. submit()을 이용해 Callable 작업을 전달하고 Future 인스턴스를 리턴받음 (작업이 시작됨)
+                Future<String> submit = executorService.submit(implementLambda);
+
+                // 4. Future 인스턴스를 이용하여 Callable 작업 결과를 받음
+                String result = submit.get();
+
+                // 5. main Thread Job
+                System.out.println("main Thread Job: " + LocalDateTime.now()); // get() 호출 시 main Thread는 작업을 계속 기다려야 함
+
+                // 6. 잊지말고 Thread Pool 종료
+                executorService.shutdown();
+            </code>
+
+            - 예제 출력 값
+            <code>
+                start: 2022-01-18T23:53:08.454156
+                main Thread Job: 2022-01-18T23:53:13.490110
+            <code>
+            => Callable 작업이 끝날 때까지 기다린 것을 알 수 있다. (5초)
+
+        5) Future isDone()
+            - isDone() 메서드를 사용하여 Thread Pool에 submit되어 실행 중인 Callable 작업이 언제 끝난지를 확인할 수 있다.
+            - isDone() 값이 true인 경우 get()으로 데이터를 가지고 갈 수 있다는 의미이다.
+
+            <code>
+
+            </code>
+
+* 출처 : - https://veneas.tistory.com/entry/Java-리턴-값이-있는-스레드-Callable-Interface

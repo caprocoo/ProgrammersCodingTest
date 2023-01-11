@@ -1,0 +1,36 @@
+* 모던 자바 인 액션 chap03 - 람다 표현식 p.114
+
+2. 메서드 참조란?
+    - Java 8에 도입된 메서드 참조는 'class::methodName' 구문을 사용하여 클래스 또는 객체에서 메서드를 참조할 수 있다.
+    - 람다식에 메서드 참조를 사용하면 코드를 더 간결하고 가독성 있게 만들 수 있다.
+    <code>
+        // 람다식
+        str -> str.toString()
+        // 메서드 참조
+        String::toString
+
+        // 람다식
+        str -> str.length()
+        // 메서드 참조
+        String::length
+
+        // 람다식
+        (int x, int y) -> x.compareTo(y)
+        // 메서드 참조
+        Integer::compareTo
+    </code>
+    => 메서드 참조는 이중 콜론(::)을 사용하여 클래스 이름과 메서드 이름을 구분하고 람다식과 달리 인수를 전달할 필요가 없다.
+
+    2-1 메서드 참조 유형
+        1) 정적 메서드에 대한 메서드 참조(Class::StaticMethodName)
+            - 예시 : StaticMethodExample.java
+        2) Object 인스턴스 메서드에 대한 참조(Object::InstanceMethodName)
+            - 예시 : ObjectMethodExample.java
+        3) 특정 타입(또는 클래스)에 대한 인스턴스 메서드에 대한 메서드 참조 (Class::InstanceMethodName)
+            - 예시 : ClassMethodExample.java
+        4) 생성자에 대한 메서드 참조 (Class::new)
+            - 예시 : TypeClassMethodExample.java
+
+    2-2
+
+* 출처 : - https://developer-talk.tistory.com/462
