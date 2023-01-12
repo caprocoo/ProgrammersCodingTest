@@ -70,6 +70,9 @@
                 System.out.println(plus.apply(10, 20)); // 30 출력
             </code>
 
+        * 만약 세 가지 이상의 인수를 받아 4번째 인수의 리턴 값을 받고 싶을 때는 어떻게 해야할까?
+            - 예제 : TriFunctionExample.java 참조
+
 
 
 

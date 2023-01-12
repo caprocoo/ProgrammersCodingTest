@@ -31,6 +31,53 @@
         4) 생성자에 대한 메서드 참조 (Class::new)
             - 예시 : TypeClassMethodExample.java
 
-    2-2
+    2-2 람다 표현식을 조합할 수 있는 유용한 메서드
+        1) Comparator 조합
+            (1) 정렬
+                <code>
+                    Comparator<Apple> c = Comparator.comparing(Apple:getWeight);
+                </code>
+                => 정적 메서드 Comparator 를 이용한다.
+
+            (2) 역정렬
+                <code>
+                    inventory.sort(comparing(Apple::getWeight).reversed());
+                </code>
+                => 무게를 기준으로 역정렬한다.
+
+            (3) Comparator 연결
+                <code>
+                    inventory.sort(comparing(Apple::getWeight)
+                                   .reversed()
+                                   .thenComparing(Apple::getCountry)
+                                   );
+                </code>
+                => 사과가 만약 무게가 같아 비교할 수 없다면 thenComparing 메서드를 통해 두 번째 비교자를 만들 수 있다.
+
+        2) Predicate 조합
+            (1) negate
+                - 예를 들어 '빨간색이 아닌 사과'와 같이 특정 predicate를 반전시킬 때 negate 메서드를 사용한다.
+                <code>
+                    Predicate<Apple> notRedApple = redApple.negate();
+                </code>
+                => 기존 predicate 객체인 redApple의 결과를 반전시킨 객체를 만든다.
+
+            (2) and
+                - and 메서드를 이용하여 빨간색이면서 무거운 사과를 선택하도록 두 람다를 조합할 수 있다.
+                <code>
+                    Predicate<Apple> redAndHeavyApple = redApple.and(apple -> apple.getWeight() >150);
+                </code>
+                => 두 Predicate 객체를 연결해서 새로운 Predicate 객체를 만든다.
+
+            (3) or
+                - or 메서드를 이용하여 '빨간색이면서 무거운 사과 또는 그냥 녹색사과'와 같이 다양한 조건을 만들 수 있다.
+                <code>
+                    Predicate<Apple> redAndHeavyAppleOrGreen = redApple.and(apple-> apple.getWeight() > 150)
+                                                                       .or(apple-> GREEN.equals(a.getColor()));
+                </code>
+                => Predicate 메서드를 연결해서 더 복잡한 Predicate 객체를 만든다.
+
+        3) Function 조합
+            - 예제 : src/theory/java/modern/chap02/UnaryOperatorExample.java 참조
 
 * 출처 : - https://developer-talk.tistory.com/462
