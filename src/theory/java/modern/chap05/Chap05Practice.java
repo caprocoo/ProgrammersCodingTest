@@ -4,8 +4,9 @@ import theory.java.modern.example.Dish;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
-
+import static theory.java.modern.example.Dish.menu;
 /**
  * packageName    : theory.java.modern.chap05
  * fileName       : Chap05Practice
@@ -41,6 +42,7 @@ public class Chap05Practice {
         for (int i = 0; i < list2.size(); i++) {
             System.out.println(Arrays.toString(list2.get(i)));
         }
+
 
 
 
