@@ -22,5 +22,6 @@ public class Chap04Practice {
     public static void main(String[] args) {
         List<String> StreamList = menu.stream().filter(dish -> dish.getCalories() > 300).map(Dish::getName).collect(Collectors.toList());
         System.out.println(StreamList);
+
     }
 }

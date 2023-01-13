@@ -1,0 +1,75 @@
+1. Stream 활용
+    - 스트림 API는 내부 반복 뿐만 아니라 코드를 병렬로 실행할지 여부도 결정할 수 있다.
+    - 스트림 API가 지원하는 연산을 이용해서 필터링, 매핑, 검색, 매칭, 리듀싱 등 다양한 데이터 처리 질의를 표현할 수 있다.
+    - 숫자 스트림, 파일과 배열 등 다양한 소스로 스트림을 만드는 방법과, 무한 스트림 등 특수한 경우도 살펴본다.
+
+    1-1 필터링
+        1) Predicate filtering
+            - Predicate(:return boolean)를 인수로 받아서 Predicate와 일치하는 모든 요소를 포함하는 스트림을 반환한다.
+            <code>
+                List<String> StreamList = menu.stream().filter(Dish:isVegetarian).collect(Collectors.toList());
+            </code>
+            => 채식 요리인지 확인하는 메서드 참조
+
+        2) distinct - 고유 요소 필터링
+            - 고유 여부는 스트림에서 만든 객체의 hashCode, equals로 결정된다.
+            <code>
+                List<Integer> arr = Arrays.asList(1, 2, 3, 4, 5, 4, 4, 1);
+                arr.stream().filter(i -> i % 2 == 0).distinct().forEach(System.out::println);
+            </code>
+            => 리스트의 모든 짝수를 선택하고 중복을 필터링한다.
+
+    1-2 슬라이싱
+        - 스트림의 요소를 선택하거나 스킵하는 다양한 방법을 설명한다.
+
+        1) Predicate를 이용한 슬라이싱
+            (1) takeWhile 활용
+                - 예제 : src/theory/java/modern/chap05/StreamSlicingExample.java 참조
+                - filter 연산을 사용하면 전체 스트림을 반복하면서 각 요소에 Predicate를 적용하지만
+                  takeWhile은 조건이 참이 아닐 경우에 바로 거기서 멈추어 스트림을 슬라이스한다.
+                - 무한 스트림에서도 동작한다.
+
+            (2) dropWhile 활용
+                - 예제 : src/theory/java/modern/chap05/StreamSlicingExample.java 참조
+                - dropWhile은 takeWhile과 반대로 정반대의 작업을 수행한다.
+                - 조건이 참이 아닌 경우에 작업을 중단하고 남은 모든 요소를 반환한다.
+                - 무한 스트림에서도 동작한다.
+
+        2) 스트림 축소
+            (1) limit(n)
+                - 주어진 값 이하의 크기를 갖는 새로운 스트림을 반환한다.
+                - 정렬되지 않은 스트림 ( ex) set )에도 limit을 사용할 수 있다. 단, 결과도 정렬되지 않은 상태로 반환된다.
+
+        3) 요소 건너뛰기
+            (1) skip(n)
+                - 처음 n개 요소를 제외한 스트림을 반환한다.
+                - limit(n)과 skip(n)은 상호 보완적인 연산을 수행한다.
+
+    1-3 매핑
+        - 특정 객체에서 특정 데이터를 선택하는 작업이다.
+        - 예를 들어 SQL의 테이블에서 특정 열만 선택할 수 있다.
+
+        1) 스트림의 각 요소에 함수 적용하기
+            <code>
+                List<String> dishNames = menu.stream().map(Dish::getName).collect(Collectors.toList());
+            </code>
+            => getName은 문자열을 반환하므로 map 메서드의 출력 스트림은 Stream<String> 형식을 갖는다.
+
+            <code>
+                List<String> words = Arrays.asList("abc", "db", "caaaaa");
+                words.stream().map(String::length).forEach(System.out::println);
+            </code>
+            => 단어 리스트가 주어졌을 때 각 단어가 포함하는 글자 수를 출력한다.
+
+        2) 스트림 평면화
+            (1) flatMap 사용
+                - 스트림의 형태가 배열과 같을 때, 모든 원소를 단일 원소 스트림으로 반환할 수 있다.
+                - 예제 : src/theory/java/modern/chap05/FlatMapExample.java 참조
+
+            (2)
+
+
+
+
+
+* 출처 : - https://devjem.tistory.com/41      // Stream 평면화 - flatMap
