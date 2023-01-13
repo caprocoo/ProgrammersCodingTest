@@ -1,4 +1,4 @@
-package theory.java.modern.chap04;
+package theory.java.modern.example;
 
 import java.util.Arrays;
 import java.util.List;

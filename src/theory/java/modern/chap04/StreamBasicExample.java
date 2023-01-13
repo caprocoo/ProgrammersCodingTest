@@ -1,9 +1,11 @@
 package theory.java.modern.chap04;
 
+import theory.java.modern.example.Dish;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static theory.java.modern.chap04.Dish.menu;
+import static theory.java.modern.example.Dish.menu;
 
 /**
  * packageName    : theory.java.modern.chap04
