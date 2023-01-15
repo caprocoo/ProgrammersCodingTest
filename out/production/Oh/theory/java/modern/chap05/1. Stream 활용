@@ -1,3 +1,5 @@
+* 모던 자바 인 액션 chap03 - 람다 표현식 p.155
+
 1. Stream 활용
     - 스트림 API는 내부 반복 뿐만 아니라 코드를 병렬로 실행할지 여부도 결정할 수 있다.
     - 스트림 API가 지원하는 연산을 이용해서 필터링, 매핑, 검색, 매칭, 리듀싱 등 다양한 데이터 처리 질의를 표현할 수 있다.
@@ -131,6 +133,12 @@
                 Optional<Integer> min = numbers.stream().reduce(Integer::min);
             </code>
             => 최솟값 찾기
+
+        3) 스트림 요소 수 찾기
+            - map과 reduce를 연결하는 기법을 맵 리듀스 패턴이라 하며, 쉽게 병렬화하는 특징이 있다.
+            <code>
+                long count = menu.stream().count();
+            </code>
 
 
 
