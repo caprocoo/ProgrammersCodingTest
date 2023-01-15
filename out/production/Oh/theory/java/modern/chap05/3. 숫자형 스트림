@@ -1,4 +1,4 @@
-* 모던 자바 인 액션 chap03 - 람다 표현식 p.181
+* 모던 자바 인 액션 chap05 - 숫자형 스트림 p.181
 
 3. 숫자형 스트림
 
@@ -101,6 +101,10 @@
         6) 개선된 코드
             - 여기서 제곱근을 계산하는 Math.sqrt()함수가 두 번 쓰인다.
             - 따라서 피타고라스 형식을 만족하는 세 수를 만든 다음에 원하는 조건에 맞는 결과만 필터링하는 것이 더 최적화된 코드이다.
+            <code>
+                Stream<double[]> pythagoreanTriples2 =  IntStream.rangeClosed(1, 100).boxed().flatMap(a -> IntStream.range(a, 100).mapToObj(b -> new double[]{a, b, Math.sqrt(a * a + b * b)})).filter(t -> t[2] % 1 == 0);
+                pythagoreanTriples2.limit(5).forEach(t -> System.out.println(t[0] + " "+t[1] + " "+t[2] ));
+            </code>
 
 
 
