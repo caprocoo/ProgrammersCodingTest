@@ -2,6 +2,9 @@
 
 2. 실전 연습
     2-1 거래자와 트랜잭션
-        <code>
+        - 예제에 사용될 코드
+            - Trader.java
+            - Transaction.java
+        - 실전 코드
+            - TransactionPractice.java
 
-        <code>

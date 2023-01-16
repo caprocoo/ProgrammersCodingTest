@@ -27,7 +27,7 @@ public class StreamSlicingExample {
                 new Dish("french fries", true, 400, Dish.Type.OTHER));
 
         // 1. takeWhile 사용
-//        specialMenu.stream().takeWhile(dish->dish.getCalories()<400).map(Dish::getCalories).forEach(System.out::println);
+        specialMenu.stream().takeWhile(dish->dish.getCalories()<400).map(Dish::getCalories).forEach(System.out::println);
 
         // 2. dropWhile 사용
         specialMenu.stream().dropWhile(dish->dish.getCalories()<530).map(Dish::getCalories).forEach(System.out::println);
