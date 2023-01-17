@@ -1,0 +1,78 @@
+* 모던 자바 인 액션 chap06 - 분할 함수 p.219
+
+2. 분할
+    - 예제 : src/theory/java/modern/chap06/DivisionExample.java 참조
+    - 분할은 분할 함수라 불리는 Predicate를 분류 함수로 사용하는 특수한 그룹화 기능이다.
+    - Boolean을 반환하므로 맵의 키 형식은 Boolean이다.
+    - 결과적으로 그룹화 맵은 최대 (참 아니면 거짓의 값을 갖는) 두 개의 그룹으로 분류된다.
+    - 예를 들어 아래의 코드는 채식 요리와 채식이 아닌 요리로 분류한다.
+    <code>
+        Map<Boolean, List<Dish>> collect = menu.stream().collect(Collectors.partitioningBy(Dish::isVegetarian));
+        System.out.println(collect);
+        // return : {false=[pork, beef, chicken, prawns, salmon], true=[french fries, rice, season fruit, pizza]}
+    </code>
+
+    - true의 값의 키로 맵에서 모든 채식 요리를 얻을 수 있다.
+    <code>
+        List<Dish> vegetarianDishes = collect.get(true);
+        System.out.println(vegetarianDishes);
+        // return : [french fries, rice, season fruit, pizza]
+    </code>
+
+    - 리스트로 표현할 수도 있다. - 모든 채식 요리를 얻을 수 있다.
+    <code>
+        List<Dish> collect1 = menu.stream().filter(Dish::isVegetarian).collect(Collectors.toList());
+        System.out.println(collect1);
+        // return : [french fries, rice, season fruit, pizza]
+    </code>
+
+    1) 분할의 장점
+        - 분할 함수가 반환하는 참, 거짓 두 가지 요소의 스트림 리스트를 모두 유지할 수 있다는 것이 분할의 장점이다.
+        - 위에서 다룬 partitioningBy 메서드는 오버로드된 버전으로 두 번째 인수를 전달할 수도 있다.
+        <code>
+            Map<Boolean, Map<Type, List<Dish>>> vegetarianDishesByType = menu.stream().collect(Collectors.partitioningBy(Dish::isVegetarian, Collectors.groupingBy(Dish::getType)));
+            System.out.println(vegetarianDishesByType);
+            // return : {false={FISH=[prawns, salmon], MEAT=[pork, beef, chicken]}, true={OTHER=[french fries, rice, season fruit, pizza]}}
+        </code>
+
+        - 채식 요리와 채식이 아닌 요리 각각의 그룹에서 가장 칼로리가 높은 요리를 찾는다.
+        <code>
+            Map<Boolean, Dish> mostCaloricPartitionedByVegetarian = menu.stream().collect(Collectors.partitioningBy(Dish::isVegetarian, Collectors.collectingAndThen(
+                    Collectors.maxBy(Comparator.comparingInt(Dish::getCalories)),
+                    Optional::get
+            )));
+            System.out.println(mostCaloricPartitionedByVegetarian);
+        </code>
+
+    2) 숫자를 소수와 비소수로 분할하기
+        - 정수 n을 인수로 받아서 2에서 n까지의 자연수를 소수와 비소수로 나누는 프로그램을 구현하자.
+        - 먼저 주어진 수가 소수인지 아닌지 판단하는 Predicate를 구현한다.
+        <code>
+            public static boolean isPrime(int candidate){
+                return IntStream.range(2, candidate).noneMatch(i -> candidate % i == 0);
+            }
+            System.out.println(isPrime(3));
+            // return : true
+        </code>
+
+        - 소수의 대상을 주어진 수의 제곱근 이하의 수로 제한할 수 있다.
+        <code>
+            public static boolean isPrime(int candidate){
+                int candidateRoot = (int) Math.sqrt(candidate);
+                return IntStream.rangeClosed(2, candidateRoot).noneMatch(i -> candidate % i == 0);
+            }
+            System.out.println(isPrime(3));
+            // return : true
+        </code>
+
+        - n개의 숫자를 포함하는 스트림을 만든 다음에 isPrime 메서드를 Predicate로 이용하고 partitioningBy 컬렉터로 리듀스해서 숫자를 소수와 비소수로 분류할 수 있다.
+        <code>
+            public static Map<Boolean, List<Integer>> partitionPrimes(int n) {
+                return IntStream.rangeClosed(2, n).boxed().collect(
+                        Collectors.partitioningBy(candidate -> isPrime(candidate))
+                );
+            }
+            System.out.println(partitionPrimes(3));
+            // return :  {false=[], true=[2, 3]}
+
+        </code>
