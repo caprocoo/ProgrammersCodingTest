@@ -64,3 +64,15 @@
             System.out.println(isPrime(3));
             // return : true
         </code>
+
+        - n개의 숫자를 포함하는 스트림을 만든 다음에 isPrime 메서드를 Predicate로 이용하고 partitioningBy 컬렉터로 리듀스해서 숫자를 소수와 비소수로 분류할 수 있다.
+        <code>
+            public static Map<Boolean, List<Integer>> partitionPrimes(int n) {
+                return IntStream.rangeClosed(2, n).boxed().collect(
+                        Collectors.partitioningBy(candidate -> isPrime(candidate))
+                );
+            }
+            System.out.println(partitionPrimes(3));
+            // return :  {false=[], true=[2, 3]}
+
+        </code>

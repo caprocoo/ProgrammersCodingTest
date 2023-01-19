@@ -54,6 +54,7 @@ public class DivisionExample {
         System.out.println(isPrime(3));
         System.out.println(partitionPrimes(3));
 
+
     }
     // 2) 숫자를 소수와 비소수로 분할하기
     public static boolean isPrime(int candidate){
