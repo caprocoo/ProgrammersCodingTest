@@ -26,13 +26,6 @@ import static theory.java.modern.example.Dish.*;
 public class Chap06Practice {
     public static void main(String[] args) {
 
-        String str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        int strLength = str.length();
-        StringBuffer randomStr = new StringBuffer();
-        Random random = new Random();
-        for (int i = 0; i < 20; i++) {
-            randomStr.append(str.charAt(random.nextInt(strLength)));
-        }
 
 
 
