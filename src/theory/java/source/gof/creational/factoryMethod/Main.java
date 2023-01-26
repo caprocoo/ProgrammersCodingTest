@@ -14,10 +14,12 @@ package theory.java.source.gof.creational.factoryMethod;
 public class Main {
     public static void main(String[] args) {
 
-        UserFactory userFactory = new NaverUserFactory();
+        UserFactory naverUserFactory = new NaverUserFactory();
         UserFactory kakaoUserFactory = new KakaoUserFactory();
-        User user = userFactory.newInstance();
+        User naverUser = naverUserFactory.newInstance();
         User kakaoUser = kakaoUserFactory.newInstance();
+        naverUser.signup();
+        kakaoUser.signup();
 
     }
 }
@@ -25,7 +27,8 @@ interface User{
     void signup();
 }
 
-class KakaoUser implements User{
+class KakaoUser implements User {
+
 
     @Override
     public void signup() {
@@ -43,9 +46,7 @@ class NaverUser implements User {
 abstract class UserFactory{
     public User newInstance(){
         User user = createUser();
-        user.signup();
         return user;
-
     }
     protected abstract User createUser();
 

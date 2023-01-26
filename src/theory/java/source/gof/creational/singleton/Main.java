@@ -4,7 +4,7 @@ public class Main {
 
 
     public static void main(String[] args) {
-        Wifi wifi1 = Wifi.requestWifi();    // 와파이 요청 1
+        Wifi wifi1 = Wifi.requestWifi();    // 와이파이 요청 1
         Wifi wifi2 = Wifi.requestWifi();    // 와이파이 요청 2
         Wifi wifi3 = Wifi.requestWifi();    // 와이파이 요청 3
         System.out.println(wifi1);
