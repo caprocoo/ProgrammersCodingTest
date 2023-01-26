@@ -1,4 +1,4 @@
-package theory.java.source.gof.singleton;
+package theory.java.source.gof.creational.singleton;
 
 public class Wifi {
 

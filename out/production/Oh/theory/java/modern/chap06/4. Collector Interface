@@ -95,9 +95,20 @@
     3) 커스텀 컬렉터를 구현하여 성능 개선하기
         - n 이하의 자연수를 소수와 비소수로 분류하기
         <code>
-
+            public boolean isPrime(int candidate){
+                int candidateRoot = (int)Math.sqrt(candidate);
+                return IntStream.rangeClosed(2, candidateRoot)
+                        .noneMatch(i -> candidate % i == 0);
+            }
         </code>
-        (1)
+        - 제곱근 이하로 대상의 숫자 범위를 제한하여 isPrime을 개선했다.
+        - 커스텀 컬렉터를 이용하면 성능을 더 개선할 수 있다.
+
+        (1) 소수로만 나누기
+            - 우선 소수로 나누어 떨어지는지 확인해서 대상의 범위를 좁힐 수 있다.
+            -
+
+
 
 
 
