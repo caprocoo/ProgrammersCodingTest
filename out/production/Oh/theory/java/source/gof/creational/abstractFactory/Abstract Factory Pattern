@@ -1,5 +1,10 @@
 1. 추상 팩토리 패턴이란?
-    -
+    - 팩토리 메서드 패턴에서는 하나의 팩토리 클래스가 인풋으로 들어오는 값에 따라 if-else나 switch 문을 사용하여 다양한 서브 클래스를 리턴하는 형식으로 구현했다.
+    - 추상 팩토리 패턴에서는 팩토리 클래스에서 서브 클래스를 생성하는 데에 있어 이러한 if-else 문을 걷어낸다.
+    - 추상 팩토리 패턴에서는 인풋으로 서브클래스에 대한 식별 데이터를 받는 것이 아니라 또 하나의 팩토리 클래스를 받는다.
+
+2. 예제
+    - 예제 : src/theory/java/source/gof/creational/abstractFactory/Main.java 참조
 
 
 * 출처 : - https://readystory.tistory.com/119
