@@ -4,7 +4,20 @@
     - 추상 팩토리 패턴에서는 인풋으로 서브클래스에 대한 식별 데이터를 받는 것이 아니라 또 하나의 팩토리 클래스를 받는다.
 
 2. 예제
-    - 예제 : src/theory/java/source/gof/creational/abstractFactory/Main.java 참조
+    - 예제 : src/theory/java/source/gof/creational/abstractFactory/AbstractFactoryTest.java
+            src/theory/java/source/gof/creational/abstractFactory/Computer.java
+            src/theory/java/source/gof/creational/abstractFactory/ComputerAbstractFactory.java
+    - Computer.java 까지는 팩토리 패턴과 같다.
+    - ComputerAbstractFactory.java 에서는 추상 팩토리 역할을 하는 인터페이스(혹은 추상 클래스)를 추가한다.
+
+3. 추상 팩토리 패턴의 장점
+    - 추상 팩토리 패턴은 구현보다 인터페이스를 위한 코드 접근법을 제공한다.
+    - 위의 예시에서 getComputer() 메서드는 파라미터로 인터페이스를 받아 처리를 하기 때문에
+      getComputer()에서 구현할 것이 복잡하지 않다.
+    - 추상 팩토리 패턴은 추후에 sub class를 확장하는 데 있어 굉장히 쉽게할 수 있다.
+    - 위의 예시에서 만약 Laptop class를 추가하고자 한다면 getComputer()의 수정없이 LaptopFactory만 작성하면 된다.
+    - 추상 팩토리 패턴은 팩토리 패턴(팩토리 메서드 패턴)의 조건문(if-else, switch 등)으로부터 벗어난다.
+
 
 
 * 출처 : - https://readystory.tistory.com/119
