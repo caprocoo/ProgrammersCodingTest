@@ -16,8 +16,8 @@ public class Main {
 
         UserFactory naverUserFactory = new NaverUserFactory();
         UserFactory kakaoUserFactory = new KakaoUserFactory();
-        User naverUser = naverUserFactory.newInstance();
-        User kakaoUser = kakaoUserFactory.newInstance();
+        User naverUser = naverUserFactory.createUser();
+        User kakaoUser = kakaoUserFactory.createUser();
         naverUser.signup();
         kakaoUser.signup();
 
@@ -43,11 +43,15 @@ class NaverUser implements User {
     }
 }
 
+
+
+
+
 abstract class UserFactory{
-    public User newInstance(){
-        User user = createUser();
-        return user;
-    }
+//    public User newInstance(){
+//        User user = createUser();
+//        return user;
+//    }
     protected abstract User createUser();
 
 }
