@@ -7,7 +7,8 @@
     - 확장성 및 알고리즘 변경이 용이하다.
 
 3. 예제
-    - 예제 소스 : - 참조
+    - 예제 소스 : - src/theory/java/source/gof/behavioral/strategy/Main.java 참조
+                - src/theory/java/source/gof/behavioral/strategy/Main2.java 참조
 
 
 * 출처 : - https://jackjeong.tistory.com/108
