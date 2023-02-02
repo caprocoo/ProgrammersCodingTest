@@ -10,7 +10,8 @@
     - 클래스 재활용성이 증가한다.
 
 3. 예제
-    - 예제 소스 : - 참조
+    - 예제 소스 : - src/theory/java/source/gof/structural/adapter/Main.java 참조
+                - src/theory/java/source/gof/structural/adapter/Main2.java 참조
 
 
 * 출처 : - https://refactoring.guru/ko/design-patterns/structural-patterns
