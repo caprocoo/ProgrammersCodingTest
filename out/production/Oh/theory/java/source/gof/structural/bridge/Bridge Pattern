@@ -15,8 +15,13 @@
     4) RefinedAbstract
         - 기능 계층에서 새로운 부분을 확장한 클래스
 
-3. 예제
-    - 예제 소스 : - 참조
+3. 브리지 패턴의 특징
+    - 브리지 패턴은 복합 객체를 다시 재정의하여 추상 계층화된 구조이다.
+    - 구성 클래스의 연결 부분을 추상 클래스로 변경하고 이를 통해 각각의 계층이 독립적으로 확장 및 변경이 가능해진다.
+    - 상속 대신 구현을 통해 분리된 객체를 연결하며 구현을 통해 객체를 연결하면 객체 간 종속 관계를 제거할 수 있다.
+
+5. 예제
+    - 예제 소스 : - src/theory/java/source/gof/structural/bridge/Main.java 참조
 
 
 * 출처 : - https://refactoring.guru/ko/design-patterns/bridge
