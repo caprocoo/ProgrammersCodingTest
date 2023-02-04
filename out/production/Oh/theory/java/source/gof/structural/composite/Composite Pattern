@@ -25,6 +25,7 @@
 
 3. 예제
     - 예제 소스 : - src/theory/java/source/gof/structural/composite/Main.java 참조
+                - src/theory/java/source/gof/structural/composite/Main2.java 참조
 
 
 * 출처 : - https://refactoring.guru/ko/design-patterns/composite
