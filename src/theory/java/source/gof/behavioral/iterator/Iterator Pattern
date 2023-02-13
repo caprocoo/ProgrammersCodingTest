@@ -29,8 +29,8 @@
     3) 메멘토 패턴을 반복자 패턴과 함께 사용하면 현재 순회 상태를 포착하고 필요한 경우 롤백이 가능하다.
 
 5. 예제
-    - 예제 소스 : -
-
+    - 예제 소스 : - src/theory/java/source/gof/behavioral/iterator/Main.java 참조
+                - src/theory/java/source/gof/behavioral/iterator/Main2.java 참조
 
 * 출처 : - https://refactoring.guru/ko/design-patterns/iterator
         - https://hirlawldo.tistory.com/175?category=1007990
