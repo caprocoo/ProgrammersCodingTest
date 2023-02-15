@@ -24,11 +24,10 @@
 
 
 5. 예제
-    - 예제 소스 : - 참조
+    - 예제 소스 : - src/theory/java/source/gof/behavioral/memento/Main.java 참조
 
 
 * 출처 : - https://refactoring.guru/ko/design-patterns/memento
         - https://lktprogrammer.tistory.com/65
-        - https://velog.io/@cham/Design-Pattern-%EB%A9%94%EB%A9%98%ED%86%A0-%ED%8C%A8%ED%84%B4-Memento-Pattern
 
 
