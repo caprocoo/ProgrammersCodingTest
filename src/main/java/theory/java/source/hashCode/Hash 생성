@@ -1,0 +1,14 @@
+* Java에서 SHA-256 해시 코드 생성
+    - SHA-256 알고리즘은 256 비트 해시 값을 생성하는 해시 방법이다.
+
+1. MessageDigest
+    - java.security.MessageDigest class getInstance() 을 사용한다.
+    - 예제 : src/theory/java/source/hashCode/MessageDigestMain.java 참조
+
+2. Guava 라이브러리
+    - Google의 Guava 라이브러리를 사용하여 SHA-256 해시코드를 생성한다.
+    - 예제 : src/theory/java/source/hashCode/GuavaMain.java 참조
+
+3. Apache Commons Codec
+    - org.apache.commons.codec.digest.DigestUtils 을 사용한다.
+    - 예제 : src/theory/java/source/hashCode/ApacheMain.java 참조
