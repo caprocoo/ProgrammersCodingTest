@@ -1,4 +1,4 @@
-package theory.java.source._abstract_class;
+package theory.java.source.abstract_class;
 
 
 public abstract class Animal {
