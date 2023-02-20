@@ -14,6 +14,8 @@ package theory.java.source;
 public class Ex {
     public static void main(String[] args) {
 
-
+        String a = "21_1.jpg";
+        System.out.println(a.lastIndexOf('_'));
+        System.out.println(a.substring(0, a.lastIndexOf('_')));
     }
 }
