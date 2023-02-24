@@ -1,0 +1,30 @@
+1. Type Casting (타입형 변환)
+    - 캐스트 연산자는 특정 자료형을 다른 자료형으로 변환하는 연산자이다.
+    - 예를 들어 int 형과 long 형은 저장하는 방식이 다르고 int 형과 float 형 역시 저장하는 방식이 다르다.
+    - 특정 자료형을 다른 자료형과 호환되게 변경하는 방법을 Type Casting, 한국말로 형변환이라고 한다.
+    - Primitive Type 들의 Type Casting 은 모두 서로 변환 가능하며 동등 Type Casting 이다.
+    - 하지만 Class Type 은 Type Casting 이 불가능하며 상속관계의 경우 Type Casting 이 가능하다.
+
+2. Class Type Casting
+    - 부모 클래스는 명시적인 Type Casting 없이 자식과 연결할 수 있다.(Up-Casting)
+    - 자식클래스는 명시적인 Type Casting 이 있다면 부모와 연결할 수 있다. (Down-Casting)
+    - 상속관계가 아니면 Type Casting 은 불가능하다.
+
+3. Up-Casting
+    - 서브 클래스의 객체가 수퍼 클래스 타입으로 형변환 되는 것을 말한다.
+    - 수퍼 클래스의 참조변수가 서브 클래스로 객체화된 인스턴스를 가리킬 수 있게 된다.
+    - Up-Casting을 하게 되면 객체 (여기서는 Student2) 내의 모든 멤버에 접근할 수 없다.
+      멤버 필드 뿐만 아니라 메서드도 마찬가지이다.
+    - 예제 : - src/main/java/theory/java/source/casting/UpCasting.java 참조
+
+4. Down-Casting
+    - Down-Casting 은 자신의 고유한 특성을 잃은 서브 클래스의 객체를 복구시키는 것이다.
+    - Up-Casting 과 다른 점으로는 명시적으로 타입을 지정해주는 것과 Up-Casting이 선행된 후 진행되어야 한다는 점이다.
+    - 예제 : - src/main/java/theory/java/source/casting/DownCasting.java 참조
+
+5. 예제
+    - 예제 소스 : - src/main/java/theory/java/source/casting/Main.java 참조
+
+* 출처 : - https://kamang-it.tistory.com/entry/Java-19%ED%83%80%EC%9E%85%ED%98%95-%EB%B3%80%ED%99%98Type-Casting
+        - https://velog.io/@sezzzini/Java-Casting
+
