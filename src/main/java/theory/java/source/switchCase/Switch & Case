@@ -1,0 +1,26 @@
+1. switch & case
+    - if 문과 비슷하지만 더 정형화된 조건 판단 문이다.
+    - 입력변수의 값과 일치하는 case 입력 값이 있다면 해당 case 문에 속한 문장들이 실행된다.
+    - case 문마다 break 라는 문장이 있는데 해당 case문을 실행한 뒤 switch 문을 빠져나가기 위한 것이다.
+    - 만약 break 문이 빠져있다면 그 다음의 case 문이 실행된다.
+    - 입력 값이 정형화되어 있는 경우 if문보다는 switch/case 문을 쓰는 것이 가독성에서 좀 더 유리하다.
+    - switch/case 문은 if else 로 변경이 가능하지만 if else 구조로 작성된 모든 코드는 switch/case 문으로 변경할 수 없다.
+    - switch/case 에 들어가는 입력 변수의 타입은 byte, short, char, int 만 가능하다.
+
+2. 구조
+   <code>
+     switch(입력변수) {
+         case 입력값1: ...
+              break;
+         case 입력값2: ...
+              break;
+         ...
+         default: ...
+              break;
+     }
+   </code>
+
+3. 예제
+    - 소스 : src/main/java/theory/java/source/switchCase/Main.java 참조
+
+* 출처 : - https://wikidocs.net/263
