@@ -1,0 +1,45 @@
+1. RegEx (정규 표현식)
+    - 정규표현식 (Regular Expression) 은 줄여서 RegEx라고 한다.
+    - RegEx는 문자열에 어떤 패턴의 문자들이 있는지 찾는데 도움을 준다.
+
+2. Metacharacters
+    - RegEx의 패턴에서 어떤 문자가 특별한 의미를 갖는 것을 말한다.
+
+    1) .
+        : 어떤 문자 1개를 의미
+    2) ^regex
+        : ^ 다음 regex로 line을 시작하는지
+    3) regex$
+        : $ 앞의 regex가 line의 마지막으로 끝나는지
+    4) [abc]
+        : a, b, c 중의 문자 1개
+    5) [abc][vz]
+        : a, b, c 중에 문자 1개와 v, z 중에 문자 1개의 조합
+    6) [^abc]
+        : a, b, c를 제외한 문자 1개
+    7) [a-d1-7]
+        : ad, 17 사이의 문자 1개
+    8) X|Z
+        : X 또는 Z
+    9) \d
+        : 0~9 사이의 숫자, [0-9]와 동일
+    10) \D
+        : 숫자가 아닌 어떤 문자, [^0-9]와 동일
+    11) \s
+        : whitespace 1개, [\t\n\x0b\r\f]와 동일
+    12) \S
+        : whitespace를 제외한 문자
+    13) \w
+        : Alphanumeric(alphabet, 숫자) 문자, [a-zA-Z_0-9]와 동일
+    14) \W
+        : Alphanumeric을 제외한 문자(whitespace 등)
+    15) \S+
+        : whitespace를 제외한 여러 문자
+    16) \b
+        : 단어의 경계(공백)를 찾습니다
+
+    - 예제 : src/main/java/theory/java/source/regEx/Metacharacters.java 참조
+
+
+* 출처 : - https://codechacha.com/ko/java-regex/
+
