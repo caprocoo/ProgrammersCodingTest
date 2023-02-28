@@ -23,7 +23,7 @@ public class Metacharacters {
     }
     
     // ex1, ex5 사용
-    private static void matchString(String data, String data2, String av, String ac, String Ex_g, String Ex_6) {
+    public static void matchString(String data, String data2, String av, String ac, String Ex_g, String Ex_6) {
         String pattern = data;
         System.out.println(av.matches(pattern));
         System.out.println(ac.matches(pattern));
@@ -34,7 +34,7 @@ public class Metacharacters {
     }
 
     // 예제 분기 함수
-    private static void markPoint(String point){
+    public static void markPoint(String point){
         System.out.println("---------------" + point + "---------------");
 
     }
@@ -45,7 +45,7 @@ public class Metacharacters {
     }
     
     // ex2, ex3, ex4 사용
-    private static void replaceString(String x, String word1, String word2) {
+    public static void replaceString(String x, String word1, String word2) {
         String result;
         result = x.replaceAll(word1, "*");
         System.out.println(result);
