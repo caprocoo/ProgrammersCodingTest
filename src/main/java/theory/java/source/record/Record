@@ -1,0 +1,20 @@
+1. Record
+    - 불변 데이터 객체를 쉽게 생성할 수 있도록 하는 새로운 유형의 클래스이다.
+    - JDK 14 에 Preview 로 등장하여 JDK 16 에서 정식 스펙으로 포함되었다.
+
+2. 기존의 불변 데이터 객체
+    - 예제 : src/main/java/theory/java/source/record/Person.java 참조
+    - 상태(name, age)를 보유하는 불변 객체를 생성하기 위해 많은 코드를 작성한다,
+        (모든 필드에 final 명시, 생성자, getter, 로깅 출력을 위한 toString, hashCode, equal 정의)
+
+3. Record 를 이용한 불변 객체
+    - 예제 : src/main/java/theory/java/source/record/RecordDemo.java 참조
+    <code>
+        public record Person(String name, int age) {
+        }
+    </code>
+    - 위와 같은 레코드 클래스를 사용하면 훨씬 간결한 방식으로 동일한 불변 데이터 객체를 정의할 수 있다.
+    
+
+
+* 출처 : - https://scshim.tistory.com/372
