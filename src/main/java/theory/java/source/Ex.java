@@ -1,5 +1,9 @@
 package theory.java.source;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 /**
  * packageName    : theory.java.source
  * fileName       : ex
@@ -14,8 +18,11 @@ package theory.java.source;
 public class Ex {
     public static void main(String[] args) {
 
-        String a = "21_1.jpg";
-        System.out.println(a.lastIndexOf('_'));
-        System.out.println(a.substring(0, a.lastIndexOf('_')));
+        Date today = new Date();
+        Locale currentLocale = new Locale("KOREAN", "KOREA");
+        String pattern = "yyyyMMddHHmmss"; //hhmmss로 시간,분,초만 뽑기도 가능
+        SimpleDateFormat formatter = new SimpleDateFormat(pattern, currentLocale);
+        System.out.println(formatter.format(today));
+
     }
 }

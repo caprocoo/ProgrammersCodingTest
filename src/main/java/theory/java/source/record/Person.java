@@ -17,9 +17,9 @@ public class Person {
         return age;
     }
 
-    public record Person(String name, int age) {
-
-    }
+//    public record Person(String name, int age) {
+//
+//    }
 }
 
 
