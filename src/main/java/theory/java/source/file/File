@@ -1,0 +1,29 @@
+* File 생성 방법 3가지
+
+1. java.io.File
+    - 예제 : src/main/java/theory/java/source/file/File.java 참조
+    - File 클래스의 createNewFile() 메서드를 이용하여 새로운 파일 및 디렉토리를 생성할 수 있다.
+    - 파일을 성공적으로 생성하면 true 반환하고, 기존에 이미 동일한 이름의 파일이 있을 경우 false를 리턴한다.
+
+2. java.io.FileOutputStream
+    - 예제 : src/main/java/theory/java/source/file/FileOutputStream.java 참조
+    - FileOutputStream 의 생성자를 이용해서 파일을 생성한다.
+    - FileOutputStream 생성자 예시
+        <code>
+            public FileOutputStream(String name) throws FileNotFoundException
+            public FileOutputStream(String name, boolean append) throws FileNotFoundException
+            public FileOutputStream(File file) throws FileNotFoundException
+            public FileOutputStream(File file, boolean append) throws FileNotFoundException
+            public FileOutputStream(FileDescriptor fdObj)
+        </code>
+        => 첫 번째 파라미터는 생성할 파일의 문자열, File 객체, File Descriptor 객체를 전달한다.
+           두 번째 파라미터(append) 의 경우 만약 생성하려는 파일이 존재하는 경우 기존 파일을 열어서 뒤에 파일을 작성할지,
+           기존 파일을 덮어쓰고 새로 파일을 생성할지를 지정해 준다. (기본 값은 false)
+           만약 append 값이 true 이면 파일에 내용을 이어붙이고, false 인 경우 덮어쓰기 되므로 주의해야 한다.
+
+3. java.nio.file.Files
+    - 예제 : src/main/java/theory/java/source/file/NioFiles.java 참조
+    - Java 7 이후부터는 Files.createFile() 메서드를 이용하여 파일을 생성할 수 있다.
+    - 두 번째 파라미터인 FileAttribute 객체는 Optional 로 필수가 아니다.
+
+* 출처 : - https://hianna.tistory.com/588
