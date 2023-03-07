@@ -1,0 +1,16 @@
+1. Directory 삭제하기
+    - File.delete() 함수를 활용하면 구현이 가능하다.
+    - 파일은 쉽게 삭제가 가능하지만 폴더는 하위에 파일이 하나라도 남아있으면 File.delete() 함수가 작동하지 않는다.
+    - 그러므로 폴더를 삭제하기 전에 폴더 안에 있는 파일을 삭제해주는 작업을 선행해야 한다.
+
+2. 폴더 안의 파일들을 제거한 뒤 대상 폴더 제거
+    - 예제 : src/main/java/theory/java/source/file/directory/DeleteDirectoryOne.java 참조
+    - 만약 제거할 대상 폴더 안에 또 다른 폴더가 있으면 File.delete() 함수가 작동하지 않아서 while문이 끊없이 도는 무한 루프에 빠질 수 있다.
+
+3. 폴더 안의 폴더, 파일 등을 재귀적으로 제거한 뒤 대상 폴더 제거
+    - 예제 : src/main/java/theory/java/source/file/directory/DeleteDirectoryTwo.java 참조
+    - 재귀 함수를 호출하여 밑에 있는 폴더부터 차례대로 삭제하는 방법을 사용할 수 있다.
+
+
+* 출처 : - https://coding-factory.tistory.com/284
+        - https://dpdpwl.tistory.com/66
