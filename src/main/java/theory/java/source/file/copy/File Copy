@@ -1,0 +1,23 @@
+1. FileInputStream, FileOutPutStream
+    - FileInputStream으로 파일을 읽고,  FileOutPutStream으로 새로운 파일을 쓴다.
+    - 예제 : src/main/java/theory/java/source/file/copy/FileInputOutput.java 참조
+
+2. Files.copy()
+    - java.nio.file.Files 클래스는 파일을 복사할 수 있는 copy() 메서드를 제공한다.
+    - 파라미터로 source, target, options 이 있다.
+    - source : source file path
+    - target : target file path
+    - options :
+        - REPLACE_EXISTING : target 이 존재하면 덮어쓴다.
+        - COPY_ATTRIBUTES  : 파일 attribute 를 복사한다.
+        - NOFOLLOW_LINKS   : 파일이 symbolic link 이면 symbolic link 자체가 복사된다.
+    - 예제 : src/main/java/theory/java/source/file/copy/CopyFile.java 참조
+
+3. FileChannel
+    - FileChannel 클래스는 파일의 읽기, 쓰기, 맵핑 등을 위한 채널을 제공한다.
+    - 한 파일에서 다른 파일로 컨텐츠를 전송할 수 있다.
+    - transferFrom(), transferTo() 메서드를 이용하여 내용을 복사할 수 있다.
+    - 예제 : src/main/java/theory/java/source/file/copy/FileChannelExample.java 참조
+
+
+* 출처 : - https://hianna.tistory.com/604
