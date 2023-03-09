@@ -1,9 +1,5 @@
 package theory.java.source;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 /**
  * packageName    : theory.java.source
  * fileName       : ex
@@ -18,11 +14,9 @@ import java.util.Locale;
 public class Ex {
     public static void main(String[] args) {
 
-        Date today = new Date();
-        Locale currentLocale = new Locale("KOREAN", "KOREA");
-        String pattern = "yyyyMMddHHmmss"; //hhmmss로 시간,분,초만 뽑기도 가능
-        SimpleDateFormat formatter = new SimpleDateFormat(pattern, currentLocale);
-        System.out.println(formatter.format(today));
+        String str = "/api/board/v1/image/12/2.png?userId=user7";
+
+
 
     }
 }

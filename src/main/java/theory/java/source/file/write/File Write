@@ -1,0 +1,24 @@
+* File Text Write
+
+1. BufferedWriter
+    - 예제 : src/main/java/theory/java/source/file/write/BufferedWriterExample.java 참조
+    - 파일이 존재하지 않는 경우 파일을 생성하여 text 를 입력하고 저장한다.
+    - BufferedWriter 를 사용했으면 마지막에 close() 를 호출하여 FileDescriptor 를 닫아준다.
+    - Try-with-resources 를 사용한다면 try 가 마지막에 close() 를 호출해주기 때문에 따로 호출하지 않아도 된다.
+
+2. PrintWriter
+    - 예제 : src/main/java/theory/java/source/file/write/PrintWriterExample.java 참조
+    - print() 로 여러 번의 text 를 입력할 수 있으며 마지막에 close() 를 꼭 호출해야 한다.
+    - Try-with-resources 를 사용한다면 try 가 마지막에 close() 를 호출해주기 때문에 따로 호출하지 않아도 된다.
+
+3. FileOutputStream
+    - 예제 : src/main/java/theory/java/source/file/write/FileOutputStreamExample.java 참조
+    - String 을 byte 로 변환하여 Stream 에 써야 한다.
+
+4. Files
+    - 예제 : src/main/java/theory/java/source/file/write/FilesExample.java 참조
+    - String 을 byte 로 변환하여 write() 의 인자로 전달한다.
+    - Files.write() 내부에서 OutputStream 으로 문자열을 파일에 쓴다.
+    - 또한, close() 도 호출해주기에 따로 호출해주지 않아도 된다.
+
+* 출처 : - https://codechacha.com/ko/java-write-to-a-file/
