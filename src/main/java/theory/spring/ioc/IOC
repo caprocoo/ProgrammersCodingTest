@@ -1,0 +1,20 @@
+1. IOC 란?
+    - 객체의 생성 ~ 생명주기 관리를 컨테이너가 도맡아, 제어권이 컨테이너로 넘어가게 되어서 제어권의 흐름이 바뀌어 이것을 IOC 라고 한다.
+    - IOC 컨테이너는 스프링에서 쓰이는 여러 객체들을 생성, 관리하는 객체이다.
+    - IOC 가 없으면 Autowired 를 통해 의존성 주입을 할 수 없다.
+
+2. 방법 - Component Scan
+    Component Scan (Annotation)
+    Spring Boot Project에서 @SpringBootApplication 어노테이션이 @ComponentScan 어노테이션을 포함하고 있다.
+    @SprinBootConfiguration + @ComponentScan + @EnableAutoConfiguration
+    SpringBootApplication은 Bean을 2번 등록
+    처음에 ComponentScan으로 등록 후, EnableAutoConfiguration으로 추가적인 Bean들을 읽어서 등록
+    @ComponentScan : 해당 패키지에서 @Component 어노테이션을 가진 Bean들을 스캔해서 등록
+    @EnableAutoConfiguration : Bean을 등록하는 자바 설정 파일. spring.factories 내부에 여러 Configuration들이 있고, 조건에 따라 Bean 등록
+
+    @Component, @Repository, @Service, @Controller, @Configuration
+    : @Component 라는 meta Annotation을 사용한 Annotation으로, Component Annotation
+
+    @Repository는 Spring Data JPA가 제공하는 기능으로 @Repository 어노테이션이 없더라도 Bean으로 등록됨
+    : Interface를 상속받은 객체를 찾아서 그 객체의 구현체를 IoC Container 내부적으로 만들어서 Bean으로 등록해주는 과정 처리
+3. 방법 - XML 또는 Java 설정 파일
