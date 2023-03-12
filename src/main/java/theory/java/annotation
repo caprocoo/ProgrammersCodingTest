@@ -1,5 +1,39 @@
-1.
-    :
-    -
+1. Annotation
+    - 클래스와 메서드에 추가하여 다양한 기능을 부여하는 역할을 한다.
+    - annotation 을 화용하여 spring framework 는 해당 클래스가 어떤 역할인지 정하기도 하고, bean 을 주입하기도 하며 자동으로 getter 나 setter 를 생성하기도 한다.
+    - 특별한 의미를 부여하거나 기능을 부여하는 등 다양한 역할을 수행할 수 있다.
 
-    * 출처 : https://solbel.tistory.com/209
+2. Spring 의 대표적인 Annotation 과 역할
+    1) Component
+        - 개발자가 생성한 class 를 Spring 의 Bean 으로 등록할 때 사용하는 Annotation 이다.
+        - Spring 은 해당 Annotation 을 보고 Spring 의 Bean 으로 등록한다.
+
+    2) ComponentScan
+        - Spring Framework는 @Component, @Service, @Repository, @Controller, @Configuration 중 1개라도 등록된 클래스를 찾으면, Context에 bean으로 등록한다.
+        - @ComponentScan Annotation이 있는 클래스의 하위 Bean을 등록 될 클래스들을 스캔하여 Bean으로 등록해준다.
+
+    3) Bean
+        - 개발자가 제어가 불가능한 외부 라이브러리와 같은 것들을 Bean으로 만들 때 사용한다.
+
+    4) RequestHeader
+        - Request의 header값을 가져올 수 있으며, 해당 Annotation을 쓴 메소드의 파라미터에 사용한다.
+
+    5) RequestMapping
+        - @RequestMapping(value=”“)와 같은 형태로 작성하며, 요청 들어온 URI의 요청과 Annotation value 값이 일치하면 해당 클래스나 메소드가 실행된다.
+        - Controller 객체 안의 메서드와 클래스에 적용 가능하며, 아래와 같이 사용한다.
+
+    6) RequestParam
+        - URL에 전달되는 파라미터를 메소드의 인자와 매칭시켜, 파라미터를 받아서 처리할 수 있는 Annotation으로 아래와 같이 사용한다.
+        - Json 형식의 Body를 MessageConverter를 통해 Java 객체로 변환시킨다.
+
+    7) RequestBody
+        - Body에 전달되는 데이터를 메소드의 인자와 매칭시켜, 데이터를 받아서 처리할 수 있는 Annotation으로 아래와 같이 사용한다.
+        - 클라이언트가 보내는 HTTP 요청 본문(JSON 및 XML 등)을 Java 오브젝트로 변환한다.
+        - 클라이언트가 body에 json or xml 과 같은 형태로 형태로 값(주로 객체)를 전송하면, 해당 내용을 Java Object로 변환한다.
+
+    8) ResponseBody
+        - @ResponseBody은 메소드에서 리턴되는 값이 View 로 출력되지 않고 HTTP Response Body에 직접 쓰여지게 된다.
+        - return 시에 json, xml과 같은 데이터를 return 한다.
+
+    
+* 출처 : https://solbel.tistory.com/209
