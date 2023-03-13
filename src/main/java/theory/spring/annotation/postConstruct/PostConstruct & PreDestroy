@@ -3,7 +3,7 @@
     - 초기화 작업(@PostConstruct) & 종료 작업(@PreDestroy)
     - 해당 패키지는 javax.annotation 이다.
 
-1.@PostConstruct
+2. @PostConstruct
     - 객체의 초기화 부분, 객체가 생성된 후 별도의 초기화 작업을 위해 실행하는 메서드를 선언한다.
     - @PostConstruct 어노테이션을 설정해놓은 init 메서드는 WAS 가 띄워질 때 실행된다.
     - 예제
@@ -14,7 +14,7 @@
             }
         </code>
 
-2. @PreDestory
+3. @PreDestory
     - 마지막 소멸 단계, 스프링 컨테이너에서 객체(빈)를 제거하기 전에 해야할 작업이 있다면 메소드위에 사용하는 어노테이션이다.
     - close() 하기 직전에 실행된다 : ((AbstractApplicationContext) context).close()
     - 예제
