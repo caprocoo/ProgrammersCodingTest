@@ -1,0 +1,193 @@
+1. Paging 이란?
+    - 페이징은 사용자가 어떠한 데이터를 필요로 할 때, 전체 데이터 중 일부를 보여주는 방식이다.
+
+2. 페이징 파라미터 처리용 클래스 만들기
+    1) 파라미터
+        (1) page
+            : 현재 페이지 번호를 의미한다.
+        (2) recordSize
+            : 페이지당 출력할 데이터 개수를 의미한다.
+        (3) pageSize
+            : 화면 하단에 출력할 페이지의 사이즈를 의미한다.
+        (4) keyword
+            : 검색 키워드를 의미한다.
+        (5) searchType
+            : 검색 유형을 의미한다.
+
+    - @RequestParam 으로 일일이 전달받는 방법은 효율적이지 않고 파라미터의 개수가 늘어가면 관리와 수집이 까다로워진다.
+        -> 공통으로 사용할 수 있는 하나의 클래스로 관리하는 것이 좋다.
+
+    2) SearchDTO 생성
+        <code>
+            import lombok.Getter;
+            import lombok.Setter;
+
+            @Getter
+            @Setter
+            public class SearchDto {
+
+                private int page;             // 현재 페이지 번호
+                private int recordSize;       // 페이지당 출력할 데이터 개수
+                private int pageSize;         // 화면 하단에 출력할 페이지 사이즈
+                private String keyword;       // 검색 키워드
+                private String searchType;    // 검색 유형
+
+                public SearchDto() {
+                    this.page = 1;
+                    this.recordSize = 10;
+                    this.pageSize = 10;
+                }
+
+                public int getOffset() {
+                    return (page - 1) * recordSize;
+                }
+
+            }
+        </code>
+
+3. Repository, Service, Controller 수정
+    1) Repository
+        - findAll(), count() 에 SearchDTO 객체 파라미터로 전달받도록 추가
+            <code>
+                /**
+                 * 게시글 리스트 조회
+                 * @param params - search conditions
+                 * @return 게시글 리스트
+                 */
+                List<PostResponse> findAll(SearchDto params);
+
+                /**
+                 * 게시글 수 카운팅
+                 * @param params - search conditions
+                 * @return 게시글 수
+                 */
+                int count(SearchDto params);
+            </code>
+
+    2) Service
+        <code>
+               /**
+                 * 게시글 리스트 조회
+                 * @param params - search conditions
+                 * @return 게시글 리스트
+                 */
+                public List<PostResponse> findAll(final SearchDto params) {
+                    return repository.findAll(params);
+                }
+        </code>
+
+    3) Controller
+        <code>
+            // 게시글 리스트 페이지
+            @GetMapping("/post/list")
+            public String postList(@ModelAttribute("params") final SearchDto params, Model model) {
+                return postService.findAllPost(params);
+            }
+        </code>
+
+4. Pagination 처리용 클래스 생성하기
+    1) totalRecordCount
+        - 전체 게시글의 개수를 의미한다.
+        - 검색 조건이 없는 경우에는 전체 데이터 개수가 되고, 검색 조건이 있는 경우에는 조건에 해당되는 데이터 개수가 된다.
+
+    2) totalPageCount
+        - 페이지 하단에 출력할 전체 페이지 개수를 의미한다.
+
+    3) startPage
+        - 현재 페이지네이션의 첫 페이지를 의미한다.
+
+    4) endPage
+        - 현재 페이지네이션의 끝 페이지를 의미한다.
+
+    5) limit
+        - limit 의 첫 파라미터에는 시작 위치, 두 번째 파라미터는 조회할 데이터의 개수를 지정한다.
+
+    6) existPrevPage
+        - 이전 페이지의 존재 여부를 확인하는 데 사용되는 멤버 변수이다.
+        - 현재 첫 페이지가 1이 아니라면, 이전 페이지는 이전 페이지는 무조건적으로 존재하게 된다.
+
+    7) existNextPage
+        - 다음 페이지의 존재 여부를 확인하는 데 사용되는 멤버 변수이다.
+
+    <code>
+        import lombok.Getter;
+
+        @Getter
+        public class Pagination {
+
+            private int totalRecordCount;   // 전체 데이터 수
+            private int totalPageCount;     // 전체 페이지 수
+            private int startPage;          // 첫 페이지 번호
+            private int endPage;            // 끝 페이지 번호
+            private int limitStart;         // LIMIT 시작 위치
+            private boolean existPrevPage;  // 이전 페이지 존재 여부
+            private boolean existNextPage;  // 다음 페이지 존재 여부
+
+            public Pagination(int totalRecordCount, SearchDto params) {
+                if (totalRecordCount > 0) {
+                    this.totalRecordCount = totalRecordCount;
+                    this.calculation(params);
+                }
+            }
+
+            private void calculation(SearchDto params) {
+
+                // 전체 페이지 수 계산
+                totalPageCount = ((totalRecordCount - 1) / params.getRecordSize()) + 1;
+
+                // 현재 페이지 번호가 전체 페이지 수보다 큰 경우, 현재 페이지 번호에 전체 페이지 수 저장
+                if (params.getPage() > totalPageCount) {
+                    params.setPage(totalPageCount);
+                }
+
+                // 첫 페이지 번호 계산
+                startPage = ((params.getPage() - 1) / params.getPageSize()) * params.getPageSize() + 1;
+
+                // 끝 페이지 번호 계산
+                endPage = startPage + params.getPageSize() - 1;
+
+                // 끝 페이지가 전체 페이지 수보다 큰 경우, 끝 페이지 전체 페이지 수 저장
+                if (endPage > totalPageCount) {
+                    endPage = totalPageCount;
+                }
+
+                // LIMIT 시작 위치 계산
+                limitStart = (params.getPage() - 1) * params.getRecordSize();
+
+                // 이전 페이지 존재 여부 확인
+                existPrevPage = startPage != 1;
+
+                // 다음 페이지 존재 여부 확인
+                existNextPage = (endPage * params.getRecordSize()) < totalRecordCount;
+            }
+
+        }
+    </code>
+
+5. SearchDTO 변경
+    <code>
+        import lombok.Getter;
+        import lombok.Setter;
+
+        @Getter
+        @Setter
+        public class SearchDto {
+
+            private int page;                 // 현재 페이지 번호
+            private int recordSize;           // 페이지당 출력할 데이터 개수
+            private int pageSize;             // 화면 하단에 출력할 페이지 사이즈
+            private String keyword;           // 검색 키워드
+            private String searchType;        // 검색 유형
+            private Pagination pagination;    // 페이지네이션 정보
+
+            public SearchDto() {
+                this.page = 1;
+                this.recordSize = 10;
+                this.pageSize = 10;
+            }
+
+        }
+    </code>
+
+    
+* 출처 : - https://congsong.tistory.com/26
