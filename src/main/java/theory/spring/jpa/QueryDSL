@@ -1,0 +1,100 @@
+1. QueryDSL
+    - 쉽고 간결하고 모양도 쿼리와 비슷하게 개발할 수 있다.
+    - JPA, JDO, JDBC, Lucene, Hibernate, Search, Mongo DB, 자바컬렉션 등 지원한다.
+
+2. 설정
+    1) 라이브러리 추가
+        <code>
+            <!-- QueryDSL -->
+            <dependency>
+                <groupId>com.mysema.querydsl</groupId>
+                <artifactId>querydsl-jpa</artifactId>
+                <version>3.6.3</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.mysema.querydsl</groupId>
+                <artifactId>querydsl-apt</artifactId>
+                <version>3.6.3</version>
+            </dependency>
+        </code>
+
+    2) class 생성
+        <code>
+            public static void queryDSL(EntityManager entityManager) {
+
+                JPAQuery query = new JPAQuery(entityManager);
+                QMember qMember = new QMember("m");     // 생성되는 JPQL의 별칭이 m
+                List<Member> members = query
+                        .from(qMember)
+                        .where(qMember.username.eq("철수"))
+                        .orderBy(qMember.username.desc())
+                        .list(qMember);
+
+                for (Member member : members) {
+                    System.out.println("Member : " + member.getMemberId() + ", " + member.getUsername());
+                }
+            }
+        </code>
+
+        - 사용방법
+            (1) JPAQuery 객체를 생성한다.
+            (2) EntityManager 를 인자로 넘겨준다.
+            (3) 사용할 쿼리 타입을 생성하는데 생성자에게는 별칭을 준다.
+
+3. 기능
+    1) 기본 쿼리
+        - QueryDSL 사용
+        <code>
+            JPAQuery query = new JPAQuery(em);
+            QItem item = QItem.item;
+            List<Item> list = query.from(item)
+                    .where(item.name.eq("좋은상품").and(item.price.gt(20000)))
+                    .list(item);
+        <code>
+
+        - 실행된 JPQL
+        <code>
+            select item
+            from Item item
+            where item.name = ?1 and item.price > ?2
+        </code>
+
+        - QueryDSL 의 where 절에는 and 나 or 를 사용할 수 있다.
+          여러 검색 조건을 사용해도 된다.
+          <code>
+              .where(item.name.eq("좋은상품"), item.price.gt(20000))
+          </code>
+
+          <code>
+              item.price.between(1000, 2000);     // 가격이 10000원~20000원 상품
+
+              item.name.contains("상품1");        // 상품1 이름을 포함하는 상품
+
+              item.name.startsWith("고급");       // like 검색
+          </code>
+
+    2) 결과 조회
+        (1) uniqueResult()
+            : 조회 결과가 한 건 일때 사용, 없으면 null, 하나 이상은 예외
+        (2) singleResult()
+            : uniqueResult()와 같지만 하나 이상이면 첫번째 반환
+        (3) list()
+            : 결과가 하나 이상일 경우, 없으면 빈 컬렉션
+
+    3) 페이징 및 정렬
+        <code>
+             QItem item = QItem.item;
+
+             query.from(item)
+                .where(item.price.gt(20000))
+                .orderBy(item.price.desc(), item.stockQuantity.asc())
+                .offset(10).limit(20)
+                .list(item)
+        </code>
+        (1) 정렬
+            : orderBy 사용, asc(), desc()
+        (2) 페이징
+            : offset, limit
+
+* 출처 : https://ultrakain.gitbooks.io/jpa/content/chapter10/chapter10.4.html

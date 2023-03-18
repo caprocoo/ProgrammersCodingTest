@@ -1,0 +1,61 @@
+1. 개요
+   - 자동 증가 컬럼을 기본키로 설정하는 경우 해당 시퀀스와 컬럼을 매핑해주어야 한다.
+   - 이럴 때 사용하는 것이 @SequenceGenerator 이다.
+
+2. 속성
+    1) name
+        : 참조할 수 있는 시쿠너스 제너레이터 명칭
+    2) sequenceName
+        : DB 에서 생성한 sequence 이름
+    3) initialValue
+        : 시퀀스 시작 값 (DDL 생성 시에만 사용)
+    4) allocationSize
+        : 시퀀스 호출 시마다 증가하는 수
+    5) catalog
+        : DB catalog
+    6) schema
+        : DB schema
+
+3. 사용법
+    - entity 레벨에 사용할 sequenceGenerator 를 설정한다.
+    <code>
+        @Entity
+        @Table(name = "TERMS", schema = "TEST")
+        @SequenceGenerator(name = "TERM_SQNO_GENERATOR", sequenceName = "TEST.TRMS_SQNO_SEQ", allocationSize = 1)
+        public class TERMS {
+
+        }
+    </code>
+
+    - 컬럼 레벨에서 시퀀스에 접근할 수 있다.
+    - @GenerateValue 를 사용하여 설정한 SequenceGenerator 에 접근한다.
+    <code>
+        @Entity
+        @Table(name = "TRMS", schema = "TEST")
+        @SequenceGenerator(name = "TRMS_SQNO_GENERATOR", sequenceName = "TEST.TRMS_SQNO_SEQ", allocationSize = 1)
+        public class TRMS {
+            @Id
+            @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TERM_SQNO_GENERATOR")
+            @Column(name = "TRMS_SQNO")
+            private Long trmsSqno;
+        }
+    </code>
+4. GenerateValue strategy
+    1) SEQUENCE
+        - DB 시퀀스, @SequenceGenerator 를 설정해주어야 한다.
+        - DB 시퀀스에서 시퀀스 값을 조회한 후 영속성 컨텍스트에 저장한다.
+
+    2) IDENTITY
+        - 기본 키 생성을 위임한다.
+        - DB 에 엔티티를 저장 후 자동 증가한 시퀀스 값을 조회하여 영속성 컨텍스트에 저장한다.
+          (데이터를 저장해야 시퀀스 값을 획득함)
+
+    3) TABLE
+        - 별도의 키 생성 테이블을 사용한다.
+        - @TableGenerator 를 설정해야 한다.
+        - DB 시퀀스 생성용 테이블에서 시퀀스 값을 조회한 후 영속성 컨텍스트에 저장한다.
+
+    4) AUTO
+        - 방언에 따라 자동으로 기본 값으로 지정한다.
+
+* 출처 : - https://aljjabaegi.tistory.com/675
