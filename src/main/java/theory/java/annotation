@@ -35,5 +35,5 @@
         - @ResponseBody은 메소드에서 리턴되는 값이 View 로 출력되지 않고 HTTP Response Body에 직접 쓰여지게 된다.
         - return 시에 json, xml과 같은 데이터를 return 한다.
 
-    
+
 * 출처 : https://solbel.tistory.com/209
