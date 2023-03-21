@@ -1,0 +1,252 @@
+1. Member 와 Team
+    - 예를 들어 Member 의 정보를 조회할 때 Team 의 정보도 함께 조회 해야 할까?
+    - 단순 Member 로직 조회라면 Team 의 정보는 필요없다.
+    - JPA 는 이 문제를 지연로딩 Lazy 를 사용하여 프록시로 조회하는 방법으로 해결한다.
+    - 아래는 Member 엔티티이다.
+    <code>
+        @Entity
+        @Getter
+        @Setter
+        public class Member extends BaseEntity {
+
+           @Id
+           @GeneratedValue(strategy = GenerationType.IDENTITY)
+           private Long id;
+
+           @Column(name = "name")
+           private String username;
+
+           private Integer age;
+
+           @Enumerated(EnumType.STRING)
+           private RoleType roleType;
+
+           @Lob
+           private String description;
+
+           // 패치 타입 LAZY 설정
+           @ManyToOne(fetch = FetchType.LAZY)
+           @JoinColumn(name = "team_id", insertable = false, updatable = false)
+           private Team team;
+
+           @OneToOne
+           @JoinColumn(name = "locker_id")
+           private Locker locker;
+
+           @OneToMany(mappedBy = "member")
+           private List<MemberProduct> memberProducts = new ArrayList<>();
+
+           public void changeTeam(Team team) {
+               this.team = team;
+               this.team.getMembers().add(this);
+          }
+        }
+    </code>
+
+    - 메인 함수에서 팀과 멤버를 저장하고 조회를 하게 되면 아래와 같은 코드로 표현할 수 있다.
+    <code>
+        Team team = new Team();
+        team.setName("teamA");
+        em.persist(team);
+
+        Member member = new Member();
+        member.setUsername("memberA");
+        em.persist(member);
+
+        member.changeTeam(team);
+
+        em.flush();
+        em.clear();
+
+        Member findMember = em.find(Member.class, member.getId());
+
+        System.out.println(findMember.getTeam().getClass());
+    </code>
+
+    - 멤버를 조회하고 팀 객체의 클래스를 확인해보면 아래와 같이 Proxy 객체가 조회된다.
+    <result>
+        Hibernate:
+           select
+              member0_.id as id1_4_0_,
+              member0_.createdBy as createdB2_4_0_,
+              member0_.createdDate as createdD3_4_0_,
+              member0_.lastModifiedBy as lastModi4_4_0_,
+              member0_.lastModifiedDate as lastModi5_4_0_,
+              member0_.age as age6_4_0_,
+              member0_.description as descript7_4_0_,
+              member0_.locker_id as locker_10_4_0_,
+              member0_.roleType as roleType8_4_0_,
+              member0_.team_id as team_id11_4_0_,
+              member0_.name as name9_4_0_,
+              locker1_.id as id1_3_1_,
+              locker1_.name as name2_3_1_
+           from
+              Member member0_
+          left outer join
+              Locker locker1_
+                   on member0_.locker_id=locker1_.id
+           where
+              member0_.id=?
+
+        class hello.jpa.Team$HibernateProxy$e97rdqZR // 프록시 객체
+    </result>
+
+    - 여기서 팀의 이름을 출력하면 팀 객체의 조회가 필요한 시점에서 쿼리가 나가는 것을 알 수 있다.
+    <code>
+        Team team = new Team();
+        team.setName("teamA");
+        em.persist(team);
+        
+        Member member = new Member();
+        member.setUsername("memberA");
+        em.persist(member);
+        
+        member.changeTeam(team);
+        
+        em.flush();
+        em.clear();
+        
+        Member findMember = em.find(Member.class, member.getId());
+        
+        System.out.println(findMember.getTeam().getClass());
+        System.out.println("TEAM NAME : " + findMember.getTeam().getName());
+    </code>
+
+    - result
+    <result>
+        Hibernate:
+           select
+              member0_.id as id1_4_0_,
+              member0_.createdBy as createdB2_4_0_,
+              member0_.createdDate as createdD3_4_0_,
+              member0_.lastModifiedBy as lastModi4_4_0_,
+              member0_.lastModifiedDate as lastModi5_4_0_,
+              member0_.age as age6_4_0_,
+              member0_.description as descript7_4_0_,
+              member0_.locker_id as locker_10_4_0_,
+              member0_.roleType as roleType8_4_0_,
+              member0_.team_id as team_id11_4_0_,
+              member0_.name as name9_4_0_,
+              locker1_.id as id1_3_1_,
+              locker1_.name as name2_3_1_
+           from
+              Member member0_
+          left outer join
+              Locker locker1_
+                   on member0_.locker_id=locker1_.id
+           where
+              member0_.id=?
+               
+        class hello.jpa.Team$HibernateProxy$z4JtUeLD // 프록시 객체
+        
+        Hibernate:
+           select
+              team0_.id as id1_8_0_,
+              team0_.createdBy as createdB2_8_0_,
+              team0_.createdDate as createdD3_8_0_,
+              team0_.lastModifiedBy as lastModi4_8_0_,
+              team0_.lastModifiedDate as lastModi5_8_0_,
+              team0_.name as name6_8_0_
+           from
+              Team team0_
+           where
+              team0_.id=?
+               
+        TEAM NAME : teamA
+    </result>
+
+2. Lazy - 지연로딩
+    - 로딩되는 시점에 Lazy 로딩 설정이 되어있는 Team 엔티티는 프록시 객체로 가져온다.
+    - 후에 실제 객체를 사용하는 시점에 초기화가 되고 DB에 쿼리가 나간다.
+        - getTeam() 으로 Team 을 조회하면 프록시 객체가 조회된다.
+        - getTeam().getXXX()으로 팀의 필드에 접근할 때 쿼리가 나간다.
+
+    * 만약 Member 와 Team 을 같이 사용하는 로직이라면?
+        - Lazy 로 조회하게 되면 SELECT 쿼리가 따로 2번 나가게 된다.
+        - 이는 네트워크를 2번 타서 조회가 이루어지므로 비효율적이다.
+        - 이때는 즉시 로딩(Eager) 전략을 사용하여 함께 조회하면 된다.
+
+3. Eager - 즉시로딩
+    - fetch 타입을 Eager 로 설정하면 되고 대부분의 JPA 구현체는 가능하면 조인을 사용하여 SQL 한번에 함께 조회하려고 한다.
+    - 실제 조회할 때 쿼리로 한번에 가져오게 되며, 실행 결과 또한 Team 객체가 아닌 실제 객체이다.
+    - 아래는 Eager 를 사용한 Member 엔티티이다.
+    <code>
+        @Entity
+        @Getter
+        @Setter
+        public class Member extends BaseEntity {
+        
+          ...
+        
+           @ManyToOne(fetch = FetchType.EAGER)
+           @JoinColumn(name = "team_id", insertable = false, updatable = false)
+           private Team team;
+        
+          ...
+        }
+    </code>
+
+    - 아래는 조회하는 코드이다.
+    <code>
+        Team team = new Team();
+        team.setName("teamA");
+        em.persist(team);
+        
+        Member member = new Member();
+        member.setUsername("memberA");
+        em.persist(member);
+        
+        member.changeTeam(team);
+        
+        em.flush();
+        em.clear();
+        
+        Member findMember = em.find(Member.class, member.getId());
+        
+        System.out.println(findMember.getTeam().getClass());
+        System.out.println("TEAM NAME : " + findMember.getTeam().getName());
+        tx.commit();
+    </code>
+
+    - Result
+    <result>
+        Hibernate:
+           select
+              member0_.id as id1_4_0_,
+              member0_.createdBy as createdB2_4_0_,
+              member0_.createdDate as createdD3_4_0_,
+              member0_.lastModifiedBy as lastModi4_4_0_,
+              member0_.lastModifiedDate as lastModi5_4_0_,
+              member0_.age as age6_4_0_,
+              member0_.description as descript7_4_0_,
+              member0_.locker_id as locker_10_4_0_,
+              member0_.roleType as roleType8_4_0_,
+              member0_.team_id as team_id11_4_0_,
+              member0_.name as name9_4_0_,
+              locker1_.id as id1_3_1_,
+              locker1_.name as name2_3_1_,
+              team2_.id as id1_8_2_,
+              team2_.createdBy as createdB2_8_2_,
+              team2_.createdDate as createdD3_8_2_,
+              team2_.lastModifiedBy as lastModi4_8_2_,
+              team2_.lastModifiedDate as lastModi5_8_2_,
+              team2_.name as name6_8_2_
+           from
+              Member member0_
+          left outer join
+              Locker locker1_
+                   on member0_.locker_id=locker1_.id
+          left outer join
+              Team team2_
+                   on member0_.team_id=team2_.id
+           where
+              member0_.id=?
+               
+        class hello.jpa.Team
+        
+        TEAM NAME : teamA
+    </result>
+
+
+
+* 출처 : - https://ict-nroo.tistory.com/132
