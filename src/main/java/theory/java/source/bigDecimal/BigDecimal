@@ -1,0 +1,11 @@
+1. BigDecimal 이란?
+    - 소수점을 저장할 수 있는 타입인 float 과 double 은 소수점의 정밀도가 완벽하지 않아 값의 오차가 생길 수 있다.
+    - 특히 소수점 이하의 수를 다룰 때 사칙연산 시 정확한 값을 출력하지 않을 수 있다.
+    - 이유는 내부적으로 수를 저장할 때 이진수의 근사치를 저장하기 때문이다.
+    - 미세한 숫자의 변동도 허용하지 않는 돈과 소수점을 다룬다면 BigDecimal 을 사용한다.
+    - BitDecimal 은 속도는 느리지만 숫자가 어긋날 가능성을 미연에 방지한다.
+
+2. 사용법
+    - 예제 : src/main/java/theory/java/source/bigDecimal/Main.java 참조
+
+* 출처 : - https://coding-factory.tistory.com/605
