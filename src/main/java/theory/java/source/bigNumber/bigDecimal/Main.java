@@ -1,4 +1,4 @@
-package theory.java.source.bigDecimal;
+package theory.java.source.bigNumber.bigDecimal;
 
 import java.math.BigDecimal;
 
