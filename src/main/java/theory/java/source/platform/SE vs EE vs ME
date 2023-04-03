@@ -1,0 +1,29 @@
+1. Java Platform
+    - Java 에는 4가지 플랫폼이 존재한다.
+        1) Java SE (Standard Edition)
+        2) Java EE (Enterprise Edition)
+        3) Java ME (Micro Edition)
+
+    - 모든 Java 플랫폼은 JVM 과 API 로 구성된다.
+
+2. Java SE (Standard Edition)
+    - 가장 기본이 되는 표준 에디션인 자바 플랫폼이다.
+    - JDK 를 설치 받아서 사용할 수 있으며 언어를 배울 때 사용하는 대부분의 패키지가 이에 속한다.
+    - Java 프로그래밍 언어의 기본 유형 및 개체에서 네트워킹, 보안, 데이터베이스 액세스,
+      그래픽 사용자 인터페이스(GUI) 개발 및 XML 구문 분석에 사용되는 고급 클래스에 이르기까지 모든 것을 정의한다.
+    - 따라서 JDBC와  GUI, 네트워크 등 각종 API를 이용해서 개발이 가능하다.
+
+3. Java EE (Enterprise Edition)
+    - Java EE 플랫폼은 Java SE 플랫폼 위에 구축된다.
+    - Java EE 플랫폼은 대규모, 다계층, 확장 가능하고 안정적이며 안전한 네트워크 애플리케이션을 개발하고 실행하기 위한 API 및 런타임 환경을 제공한다.
+    - WEB개발을 하기 위해서 JavaEE로 개발을 진행한다.
+    - 이는 Servlet과 JSON, REST 반응형 클라이언트 API, 웹소켓 등을 지원하기 때문이다.
+
+4. Java ME (Micro Edition)
+    - Java ME는 제한된 자원을 가진 휴대 전화, PDA, 세트톱박스 등에서 Java 프로그래밍 언어를 지원하기 위해 만들어진 플랫폼 중 하나를 가리킨다.
+    - Java ME는 개인용 컴퓨터에서 쉽게 에뮬레이트할 수 있고, 쉽게 전송할 수 있다는 이점으로 인해 휴대전화 플랫폼에서 인기가 있었다.
+
+
+
+* 출처 : - https://kbj96.tistory.com/38
+        - https://go-coding.tistory.com/104

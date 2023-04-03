@@ -1,5 +1,7 @@
 package theory.java.source;
 
+import java.util.Arrays;
+
 /**
  * packageName    : theory.java.source
  * fileName       : Ex2
@@ -22,11 +24,11 @@ public class Ex2 {
 
         System.out.println(Arrays.toString(evenArr)); // [2, 4, 6, 8, 10]int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 
-        int[] evenArr = Arrays.stream(arr)
+        int[] evenArr2 = Arrays.stream(arr)
                 .filter(n -> n % 2 == 0) // 짝수인 요소만 선택
                 .toArray();
 
-        System.out.println(Arrays.toString(evenArr)); // [2, 4, 6, 8, 10]
+        System.out.println(Arrays.toString(evenArr2)); // [2, 4, 6, 8, 10]
 
 
     }
