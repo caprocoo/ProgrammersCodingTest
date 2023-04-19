@@ -20,5 +20,5 @@
     - 권한이 없는 경우 해당 저장소로 push 하지 못한다.
       또한 기존의 제일 처음 original repository와 연결되지 못한다. 즉 저장소의 commit, 등의 로그를 보지 못한다.
 
-      
+
 *  출처 : - https://velog.io/@imacoolgirlyo/Git-fork%EC%99%80-clone-%EC%9D%98-%EC%B0%A8%EC%9D%B4%EC%A0%90-5sjuhwfzgp
