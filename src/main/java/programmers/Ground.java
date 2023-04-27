@@ -1,6 +1,7 @@
 package programmers;
 
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 //
@@ -25,14 +26,23 @@ import java.util.Optional;
 public class Ground {
 
     public static void main(String[] args) {
+        Ground a = new Ground();
+        a.solution("1 2 3 4");
 
-        Optional<String> optionalEmpty = Optional.empty();
-        System.out.println(optionalEmpty);
-        System.out.println(optionalEmpty.isPresent()); // false
+    }
+    public String solution(String s) {
+        String[] arr = s.split(" ");
+//        System.out.println(Arrays.toString(arr));
 
-        Optional<String> opt = Optional.ofNullable(Object.class.getName());
-        String name = opt.orElse("isNull");
-        System.out.println(name);
+        int[] intArr = new int[arr.length];
+        for (int i = 0; i < arr.length; i++) {
+            intArr[i] = Integer.parseInt(arr[i]);
+        }
+        Arrays.sort(intArr);
+
+        String answer = intArr[0]+" " +intArr[intArr.length-1] ;
+        System.out.println(answer);
+        return answer;
     }
 }
 
