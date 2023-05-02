@@ -2,7 +2,7 @@ package programmers.prac.level1;
 
 /**
  * packageName    : programmers.prac.level1
- * fileName       : 푸드_파이트_대회
+ * fileName       : 푸드_파이트_대회1
  * author         : caprocoo
  * date           : 2023-05-01
  * description    :
