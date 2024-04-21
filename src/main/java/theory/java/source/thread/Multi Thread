@@ -1,0 +1,55 @@
+1. Multi Thread 의 개념
+    - 운영체제에서 실행 중인 어플리케이션 하나를 하나의 프로세스라고 부른다.
+    - 멀티 태스킹이란 두 가지 이상의 작업을 동시에 처리하는 것을 말한다.
+      멀티 스레드란 한 프로세스에서 멀티 태스킹이 가능하게 만들어준다.
+    - 멀티 스레드는 공유되는 자원이 있어 하나의 스레드에서 예외가 발생한다면 프로세스 자체가 종료될 수 있다.
+
+2. Main Thread
+    - 모든 자바 어플리케이션은 Main Thread가 main() 메소드를 실행하면서 시작된다.
+    - 싱글 스레드 같은 경우 메인 스레드가 종료되면 프로세스도 종료되지만,
+      멀티 스레드는 메인 스레드가 종료되더라도 실행 중인 스레드가 하나라도 있다면 프로세스가 종료되지 않는다.
+
+    * Thread 생성
+        1) Thread 클래스로부터 직접 생성
+            - new 를 통해 Thread 클래스 객체를 생성 후 start 메서드를 통해 다른 스레드에서 할 작업을 할당하는 방법
+            - Thread 객체 생성 시 Runnable 인터페이스를 구현한 클래스 객체를 매개변수로 받는다.
+            - 참조 : src/main/java/theory/java/source/thread/Thread_Creation_1_1.java
+                    src/main/java/theory/java/source/thread/Thread_Creation_1_2.java
+
+        2) Thread 하위 클래스로부터 생성
+            - 스레드가 실행할 작업을 Runnable 구현 클래스 대신 Thread를 상속한 클래스를 정의하여 run 메서드를 Overriding 하는 방법이다.
+            - 참조 : src/main/java/theory/java/source/thread/Thread_Creation_1_1.java
+                    src/main/java/theory/java/source/thread/Thread_Creation_1_2.java
+
+3. Thread 우선 순위
+    - 동시성과 병렬성
+        : 코어의 수보다 스레드의 수가 작으면 각각의 코어로 병렬성이 보장되지만
+          스레드의 개수가 코어보다 많은 경우 스레드의 우선순윌르 결정해 주어야 한다.
+          이를 스레드 스케줄링이라 한다.
+
+    * 스레드 스케줄링
+        1) 우선순위(Priority) 방식
+            : setPriority()로 지정하며  setPriority(1)은 우선순위가 가장 낮고, setPriority(10)이 가장 높다.
+              직관적으로 Thread.MAX_PRIORITY, Thread.NORM_PRIORITY, Thread.MIN_PRIORITY 을 사용한다.
+
+        2) 순환 할당(Round-Robin) 방식
+            : 시간 할당량을 정해서 하나의 스레드를 정해진 시간만큼 실행하는 방법이다.
+              JVM 안에서 이루어지기 때문에 개발자가 제어할 수 없다.
+
+
+4. 동기화 메서드 or 동기화 블록
+    : 멀티스레드 환경에서 스레드들이 객체를 공유하며 작업하는 경우가 생긴다.
+      이에 따라 A 스레드, B 스레드가 공유하는 객체가 서로의 작업에 영향을 미치는 것을 방지하는 방법
+
+    1) 동기화 메서드
+        : 메서드 선언에 synchronized 붙이는 방법
+
+    2) 동기화 블록 코드
+        : 블록 안에 synchronized 붙이는 방법
+
+    - 참조 : https://honbabzone.com/java/java-thread/
+
+
+
+
+
